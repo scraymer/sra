@@ -1,7 +1,7 @@
 @import '~@angular/material/theming';
-@import './palettes';
+@import 'shared/material/palettes';
 
-@import './../layout/header/header.component.theme';
+@import 'shared/layout/header/header.component.theme';
 
 // all components that require theming within the application
 // to be called from ./src/themes.scss only
