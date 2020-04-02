@@ -1,0 +1,15 @@
+@import '~@angular/material/theming';
+@import './palettes';
+
+@import './../layout/header/header.component.theme';
+
+// all components that require theming within the application
+// to be called from ./src/themes.scss only
+@mixin app-theme($theme) {
+
+    // include themes for angular material components
+    @include angular-material-theme($theme);
+
+    // include themes for custom app components
+    @include app-header-theme($theme);
+}

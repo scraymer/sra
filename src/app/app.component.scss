@@ -1,0 +1,45 @@
+.app-container {
+    position: absolute;
+    top: 0px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.app-sidenav {
+
+    app-footer {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+}
+
+.app-content {
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    app-header {
+        display: block;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    &.app-header-hidden app-header {
+        transform: translateY(-100%);
+    }
+}
+
+.app-card {
+    margin: 16px;
+    padding-bottom: 0;
+    overflow: hidden;
+
+    .mat-card-image {
+        margin-bottom: -4px;
+    }
+}

@@ -1,0 +1,75 @@
+/*
+ * These palettes are currently unused in the themes.scss file. For now, the
+ * default material palettes are used for initial development. These palettes
+ * were recommended by material.io for accessibility using Reddit colors.
+ *
+ * See https://material.io/design/color/the-color-system.html#tools-for-picking-colors
+ */
+
+// based off #ff8700
+$app-orange: (
+    50: #fff3e0,
+    100: #ffdfb1,
+    200: #ffca7f,
+    300: #ffb44c,
+    400: #ffa424,
+    500: #ff9400,
+    600: #ff8800,
+    700: #f97802,
+    800: #f36703,
+    900: #ea4b04,
+    A100: #ffd180,
+    A200: #ffab40,
+    A400: #ff9100,
+    A700: #ff6d00,
+    contrast: (
+        50: $dark-primary-text,
+        100: $dark-primary-text,
+        200: $dark-primary-text,
+        300: $dark-primary-text,
+        400: $dark-primary-text,
+        500: $dark-primary-text,
+        600: $dark-primary-text,
+        700: $dark-primary-text,
+        800: $dark-primary-text,
+        900: $light-primary-text,
+        A100: $dark-primary-text,
+        A200: $dark-primary-text,
+        A400: $dark-primary-text,
+        A700: $dark-primary-text,
+    )
+);
+
+//based off ##0077ff
+$app-blue: (
+    50: #e2f3ff,
+    100: #bae0ff,
+    200: #8bceff,
+    300: #53baff,
+    400: #14aaff,
+    500: #009aff,
+    600: #008bff,
+    700: #0077ff,
+    800: #1564ec,
+    900: #2242cd,
+    A100: #82b1ff,
+    A200: #448aff,
+    A400: #2979ff,
+    A700: #2962ff,
+    contrast: (
+        50: $dark-primary-text,
+        100: $dark-primary-text,
+        200: $dark-primary-text,
+        300: $dark-primary-text,
+        400: $dark-primary-text,
+        500: $dark-primary-text,
+        600: $light-primary-text,
+        700: $light-primary-text,
+        800: $light-primary-text,
+        900: $light-primary-text,
+        A100: $dark-primary-text,
+        A200: $light-primary-text,
+        A400: $light-primary-text,
+        A700: $light-primary-text,
+    )
+);

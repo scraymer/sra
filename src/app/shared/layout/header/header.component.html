@@ -1,0 +1,13 @@
+<mat-toolbar class="app-header-toolbar mat-elevation-z2" role="heading">
+    <mat-toolbar-row>
+        <button mat-icon-button aria-label="Toogle menu" (click)="toggleNav()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span class="app-header-title">Simple Reddit App</span>
+        <span class="fill-remaining-space"></span>
+        <mat-slide-toggle class="mat-body-strong" color="primary" label-position="before"
+            [checked]="isDarkTheme | async" (change)="toggleDarkTheme($event.checked)">
+            Dark Mode
+        </mat-slide-toggle>
+    </mat-toolbar-row>
+</mat-toolbar>

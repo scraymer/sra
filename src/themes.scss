@@ -1,0 +1,27 @@
+@import './app/shared/material/theming';
+
+// include the common styles for Angular Material
+// **Be sure that this is only ever include once!**
+@include mat-core();
+
+// define the default light theme
+$default-light-primary: mat-palette($mat-orange);
+$default-light-accent:  mat-palette($mat-blue);
+$default-light-warn:    mat-palette($mat-red);
+$default-light-theme:   mat-light-theme($default-light-primary, $default-light-accent, $default-light-warn);
+
+// define an alternate dark theme
+$default-dark-primary: mat-palette($mat-orange);
+$default-dark-accent:  mat-palette($mat-blue);
+$default-dark-warn:    mat-palette($mat-red);
+$default-dark-theme:   mat-dark-theme($default-dark-primary, $default-dark-accent, $default-dark-warn);
+
+// include the default light theme style
+@include app-theme($default-light-theme);
+
+// include the alternative theme styles inside of a block with a CSS class
+// any component inside of an element with this CCS class will be affected by this 
+// alternate dark theme instead of the default light theme
+.dark-theme {
+  @include app-theme($default-dark-theme);
+}
