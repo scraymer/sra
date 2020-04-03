@@ -9,5 +9,6 @@
             [checked]="isDarkTheme | async" (change)="toggleDarkTheme($event.checked)">
             Dark Mode
         </mat-slide-toggle>
+        <button mat-icon-button (click)="toggleDarkTheme(true)"><mat-icon>theme</mat-icon></button>
     </mat-toolbar-row>
 </mat-toolbar>

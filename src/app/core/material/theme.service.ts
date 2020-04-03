@@ -1,16 +1,45 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Inject, Injectable, OnInit } from '@angular/core';
+import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
+import { ThemeConstant } from './theme.constant';
+
+/**
+ * Service used to control the application theme. Only dark and light themes
+ * are support.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeService {
 
-  private _darkThemeSource: Subject<boolean> = new BehaviorSubject<boolean>(false);
+  /**
+   * Source subject for managing the dark theme flag state.
+   */
+  private _isDarkSource: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  isDarkTheme = this._darkThemeSource.asObservable();
+  /**
+   * Observable for the is dark theme flag.
+   */
+  isDark: Observable<boolean> = this._isDarkSource.asObservable();
 
-  setDarkTheme(isDarkTheme: boolean): void {
-    this._darkThemeSource.next(isDarkTheme);
+  /**
+   * Set whether or not the theme should be dark.
+   * 
+   * @param isDark true for dark theme, else light theme
+   */
+  setDark(isDark: boolean): void {
+    this._isDarkSource.next(isDark);
+    this.storage.set(ThemeConstant.IS_DARK_THEME_KEY, isDark)
+  }
+
+  /**
+   * Check storage service for previous session theme properties on initialization.
+   * 
+   * @param storage storage to persiste theme properties
+   */
+  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
+    let isDark: boolean = this.storage.get(ThemeConstant.IS_DARK_THEME_KEY);
+    if (isDark === true) this.setDark(true);
   }
 }

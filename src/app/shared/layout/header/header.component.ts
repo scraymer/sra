@@ -16,11 +16,11 @@ export class HeaderComponent implements OnInit {
   constructor(private navService: NavService, private themeService: ThemeService) { }
 
   ngOnInit(): void {
-    this.isDarkTheme = this.themeService.isDarkTheme;
+    this.isDarkTheme = this.themeService.isDark;
   }
 
   toggleDarkTheme(checked: boolean): void {
-    this.themeService.setDarkTheme(checked);
+    this.themeService.setDark(checked);
   }
 
   toggleNav(): void {

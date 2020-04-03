@@ -25,8 +25,8 @@ export class AppComponent implements AfterViewInit, OnInit {
   constructor(private navService: NavService, private themeService: ThemeService ) {};
 
   ngOnInit() {
-    this.isDarkTheme = this.themeService.isDarkTheme;
-    this.themeService.isDarkTheme.subscribe(t => this.setCardImgSrc(t));
+    this.isDarkTheme = this.themeService.isDark;
+    this.themeService.isDark.subscribe(t => this.setCardImgSrc(t));
   }
 
   ngAfterViewInit(): void {
