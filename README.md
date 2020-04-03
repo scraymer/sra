@@ -1,6 +1,6 @@
-# Sra
+# Simple Reddit App (SRA)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.6.
+A Simple Reddit App (SRA) using Google Material Design dark and light appearance without infinite scrolling. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.6.
 
 ## Development server
 
