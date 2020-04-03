@@ -1,7 +1,8 @@
-import { FooterComponent } from '@shared/layout/footer/footer.component';
-import { HeaderComponent } from '@shared/layout/header/header.component';
-import { NavComponent } from '@shared/layout/nav/nav.component';
-import { ScrollHideDirective } from '@shared/layout/scroll-hide.directive';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
+import { NavComponent } from './nav/nav.component';
+import { ScrollbarDirective } from './scrollbar/scrollbar.directive';
+import { ScrollHideDirective } from './scroll-hide.directive';
 
 export const Components: any[] = [
     FooterComponent,
@@ -10,10 +11,12 @@ export const Components: any[] = [
 ];
 
 export const Directives: any[] = [
+    ScrollbarDirective,
     ScrollHideDirective
 ];
 
-export * from '@shared/layout/footer/footer.component';
-export * from '@shared/layout/header/header.component';
-export * from '@shared/layout/nav/nav.component';
-export * from '@shared/layout/scroll-hide.directive';
+export * from './footer/footer.component';
+export * from './header/header.component';
+export * from './nav/nav.component';
+export * from './scrollbar/scrollbar.directive';
+export * from './scroll-hide.directive';

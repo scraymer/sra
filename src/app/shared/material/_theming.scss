@@ -1,7 +1,9 @@
 @import '~@angular/material/theming';
 @import 'shared/material/palettes';
 
-@import 'shared/layout/header/header.component.theme';
+// import app theme styles
+@import 'shared/layout/header/header.theme';
+@import 'shared/layout/scrollbar/scrollbar.theme';
 
 // all components that require theming within the application
 // to be called from ./src/themes.scss only
@@ -10,6 +12,7 @@
     // include themes for angular material components
     @include angular-material-theme($theme);
 
-    // include themes for custom app components
+    // include app themes
     @include app-header-theme($theme);
+    @include app-scrollbar-theme($theme);
 }
