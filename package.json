@@ -6,7 +6,6 @@
     "clean": "rimraf ./dist",
     "start": "ng serve",
     "build": "ng build",
-    "build:ci": "npm run clean && npm run test && npm run build:prod",
     "build:prod": "ng build --prod",
     "test": "ng test --watch=false --browsers=ChromeHeadlessCustom",
     "test:watch": "ng test",
