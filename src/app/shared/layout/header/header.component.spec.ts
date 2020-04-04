@@ -1,7 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import * as MockMaterial from '@shared/material/testing';
-
 import { HeaderComponent } from './header.component';
 
 describe('HeaderComponent', () => {

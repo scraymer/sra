@@ -5,3 +5,4 @@ export const Components: any[] = [
 ];
 
 export * from './list.component.mock';
+

@@ -1,7 +1,6 @@
-import { Inject, Injectable, OnInit } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { BehaviorSubject, Observable } from 'rxjs';
-
 import { ThemeConstant } from './theme.constant';
 
 /**

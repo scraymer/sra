@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import * as Material from '@shared/material';
+import { NgModule } from '@angular/core';
 import * as Layout from '@shared/layout';
+import * as Material from '@shared/material';
 
 @NgModule({
   declarations: [

@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Observable } from 'rxjs';
-
 import { NavService } from '@core/layout/nav.service';
 import { ThemeService } from '@core/material/theme.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
