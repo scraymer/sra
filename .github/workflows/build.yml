@@ -42,7 +42,7 @@ jobs:
         if: success()
         with:
           name: build
-          path: dist
+          path: dist/sra
 
   deploy:
     runs-on: ubuntu-latest
@@ -63,12 +63,12 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: build
-          path: dist
+          path: dist/sra
 
       - name: Deploy Build
         uses: JamesIves/github-pages-deploy-action@3.4.6
         with:
           BRANCH: gh-pages
-          FOLDER: dist
+          FOLDER: dist/sra
           CLEAN: true
           SSH: true
