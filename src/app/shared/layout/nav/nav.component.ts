@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
 
-  links: Array<string> = ["test link"];
+  links: Array<string> = ['test link'];
 
   constructor() { }
 

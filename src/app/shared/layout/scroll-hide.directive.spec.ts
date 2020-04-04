@@ -13,8 +13,8 @@ describe('ScrollHideDirective', () => {
           providers: [MockElementRef, Renderer2]
       }).compileComponents();
 
-      el = TestBed.get(MockElementRef);
-      renderer = TestBed.get(Renderer2);
+      el = TestBed.inject(MockElementRef);
+      renderer = TestBed.inject(Renderer2);
   }));
 
   it('should create an instance', () => {

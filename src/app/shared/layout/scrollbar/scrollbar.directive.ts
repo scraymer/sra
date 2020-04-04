@@ -11,5 +11,5 @@ import { Directive, HostBinding } from '@angular/core';
 export class ScrollbarDirective {
 
   @HostBinding('class.app-scrollbar')
-  isScrollbar: boolean = true;
+  isScrollbar = true;
 }

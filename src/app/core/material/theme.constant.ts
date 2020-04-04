@@ -1,5 +1,5 @@
 export class ThemeConstant {
-  
+
   /**
    * Key for theme name in storage service.
    */

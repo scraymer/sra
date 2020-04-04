@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatDrawerToggleResult, MatSidenav } from '@angular/material/sidenav';
 
 /**
- * Service used to control the application navigation state such as opening, 
+ * Service used to control the application navigation state such as opening,
  * closing, and toggling the navigation drawer.
  */
 @Injectable({
@@ -18,7 +18,7 @@ export class NavService {
 
   /**
    * Set the material side nav component to manage.
-   * 
+   *
    * @param nav material sidenav component
    */
   setNav(nav: MatSidenav) {

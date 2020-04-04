@@ -12,17 +12,17 @@ import { ThemeService } from '@core/material/theme.service';
 })
 export class AppComponent implements AfterViewInit, OnInit {
 
-  private cardImgSrcDark: string = 'assets/under-construction-dark.jpg';
-  private cardImgSrcLight: string = 'assets/under-construction-light.jpg';
+  private cardImgSrcDark = 'assets/under-construction-dark.jpg';
+  private cardImgSrcLight = 'assets/under-construction-light.jpg';
 
-  cardImgSrc: string = '';
+  cardImgSrc = '';
 
   isDarkTheme: Observable<boolean>;
-  
+
   @ViewChild('sidenav')
   sidenav: MatSidenav;
 
-  constructor(private navService: NavService, private themeService: ThemeService ) {};
+  constructor(private navService: NavService, private themeService: ThemeService ) {}
 
   ngOnInit() {
     this.isDarkTheme = this.themeService.isDark;
