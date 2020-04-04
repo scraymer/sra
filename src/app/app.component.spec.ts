@@ -1,5 +1,9 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+
+import * as MockMaterial from '@shared/material/testing';
+import * as MockLayout from '@shared/layout/testing';
+
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
@@ -9,7 +13,9 @@ describe('AppComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        MockLayout.Components,
+        MockMaterial.Components
       ],
     }).compileComponents();
   }));

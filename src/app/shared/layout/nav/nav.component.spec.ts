@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import * as MockMaterial from '@shared/material/testing';
+
 import { NavComponent } from './nav.component';
 
 describe('NavComponent', () => {
@@ -8,7 +10,10 @@ describe('NavComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavComponent ]
+      declarations: [
+        NavComponent,
+        MockMaterial.Components
+      ]
     })
     .compileComponents();
   }));
