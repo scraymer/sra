@@ -7,15 +7,7 @@
         <mat-sidenav-content class="app-content" appScrollbar appScrollHide="app-header-hidden" 
             appScrollHideDelayDown="50" appScrollHideDelayUp="150" appScrollHidePadding="64">
             <app-header></app-header>
-            <!-- TODO: replace w/ router outlet -->
-            <mat-card class="app-card">
-                <mat-card-title>Under Construction</mat-card-title>
-                <mat-card-subtitle>Simple Reddit App</mat-card-subtitle>
-                <img mat-card-image alt="Under Construction" [src]="cardImgSrc">
-            </mat-card>
-            <section style="height: 1500px; text-align: center; color: #999;">
-                <span class="mat-caption">...empty space to test scrolling behavour...</span>
-            </section>
+            <router-outlet></router-outlet>
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div> 

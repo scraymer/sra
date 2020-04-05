@@ -11,28 +11,18 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent implements AfterViewInit, OnInit {
 
-  private cardImgSrcDark = 'assets/under-construction-dark.jpg';
-  private cardImgSrcLight = 'assets/under-construction-light.jpg';
-
-  cardImgSrc = '';
-
   isDarkTheme: Observable<boolean>;
 
   @ViewChild('sidenav')
   sidenav: MatSidenav;
 
-  constructor(private navService: NavService, private themeService: ThemeService ) {}
+  constructor(private navService: NavService, private themeService: ThemeService) {}
 
   ngOnInit() {
     this.isDarkTheme = this.themeService.isDark;
-    this.themeService.isDark.subscribe(t => this.setCardImgSrc(t));
   }
 
   ngAfterViewInit(): void {
     this.navService.setNav(this.sidenav);
-  }
-
-  private setCardImgSrc(isDarkTheme: boolean): void {
-    this.cardImgSrc = isDarkTheme ? this.cardImgSrcDark : this.cardImgSrcLight;
   }
 }
