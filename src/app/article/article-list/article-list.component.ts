@@ -8,18 +8,18 @@ import { ThemeService } from '@core/material/theme.service';
 })
 export class ArticleListComponent implements OnInit {
 
-  cardImgSrc = '';
+  constructionImgSrc = '';
 
-  private cardImgSrcDark = 'assets/under-construction-dark.jpg';
-  private cardImgSrcLight = 'assets/under-construction-light.jpg';
+  private constructionImgSrcDark = 'assets/under-construction-dark.jpg';
+  private constructionImgSrcLight = 'assets/under-construction-light.jpg';
 
   constructor(private themeService: ThemeService) { }
 
   ngOnInit(): void {
-    this.themeService.isDark.subscribe(t => this.setCardImgSrc(t));
+    this.themeService.isDark.subscribe(t => this.setConstructionImgSrc(t));
   }
 
-  private setCardImgSrc(isDarkTheme: boolean): void {
-    this.cardImgSrc = isDarkTheme ? this.cardImgSrcDark : this.cardImgSrcLight;
+  private setConstructionImgSrc(isDarkTheme: boolean): void {
+    this.constructionImgSrc = isDarkTheme ? this.constructionImgSrcDark : this.constructionImgSrcLight;
   }
 }
