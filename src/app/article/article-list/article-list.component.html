@@ -1,8 +1,21 @@
-<mat-card class="app-card">
-    <mat-card-title>Under Construction</mat-card-title>
-    <mat-card-subtitle>Simple Reddit App</mat-card-subtitle>
-    <img mat-card-image alt="Under Construction" [src]="constructionImgSrc">
-</mat-card>
-<section style="height: 1500px; text-align: center; color: #999;">
-    <span class="mat-caption">...empty space to test scrolling behavour...</span>
-</section>
+<div class="app-article-list-container">
+    <mat-card class="app-article-list-card app-under-contruction">
+        <mat-card-title>Under Construction</mat-card-title>
+        <mat-card-subtitle>Simple Reddit App</mat-card-subtitle>
+        <img mat-card-image alt="Under Construction" [src]="constructionImage">
+    </mat-card>
+    <mat-card class="app-article-list-card" *ngFor="let article of articles">
+        <mat-card-header>
+            <img mat-card-avatar [src]="article.avatar">
+            <mat-card-title>{{ article.subreddit }}</mat-card-title>
+            <mat-card-subtitle>{{ article.username }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>{{ article.title }}</p>
+            <img mat-card-image [src]="article.image" alt="Photo of a Shiba Inu">
+        </mat-card-content>
+        <mat-card-actions>
+            <a mat-button [href]="article.link" target="_blank">OPEN</a>
+        </mat-card-actions>
+    </mat-card>
+</div>

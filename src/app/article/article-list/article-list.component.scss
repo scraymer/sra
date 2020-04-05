@@ -1,9 +1,44 @@
-.app-card {
-    margin: 16px;
+.app-article-list-card .mat-card-image {
+    margin-bottom: 0;
+}
+
+.app-article-list-card.app-under-contruction {
     padding-bottom: 0;
     overflow: hidden;
 
     .mat-card-image {
         margin-bottom: -4px;
+    }
+}
+
+.app-article-list-container {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
+    justify-content: space-evenly;
+    padding: 8px;
+
+    .app-article-list-card {
+        flex: 1 1 auto;
+        margin: 8px;
+
+        display: flex;
+        flex-flow: column nowrap;
+
+        .mat-card-content {
+            flex: 1 1 auto;
+            margin-bottom: 0;
+            max-width: 400px;
+            min-width: 100%;
+            
+            display: flex;
+            flex-flow: column nowrap;
+
+            .mat-card-image {
+                flex: 1 1 auto;
+                overflow: hidden;
+                object-fit: cover;
+            }
+        }
     }
 }
