@@ -1,0 +1,30 @@
+@import 'shared/mixin';
+@import 'shared/material/palettes';
+
+// import library functions for theme creation
+@import '~@angular/material/theming';
+
+// define a mixin that accepts a theme and outputs the theme-specific styles.
+@mixin app-body-theme($theme) {
+
+    // extract the palette details needed from the theme definition
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+    $is-dark-theme: map-get($theme, is-dark);
+
+    // define background and foreground colors based on theme
+    $body-background: mat-color($background, background);
+    $body-foreground: mat-color($foreground, text);
+
+    // define scrollbar thumb and track background color based on theme
+    $scrollbar-background: if($is-dark-theme,$scrollbar-background-dark, $scrollbar-background-light);
+    $scrollbar-background-active: if($is-dark-theme, $scrollbar-background-active-dark, $scrollbar-background-active-light);
+
+    // define any styles affected by the theme
+    &.app-body {
+        background: $body-background;
+        color: $body-foreground;
+
+        @include app-scrollbar-base($scrollbar-background, $scrollbar-background-active);
+    }
+}

@@ -1,0 +1,24 @@
+// base scrollbar style
+@mixin app-scrollbar-base($background, $background-active) {
+
+    &::-webkit-scrollbar {
+        height: 6px;
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb  {
+        background: $background;
+
+        &:hover {
+            background: $background-active;
+        }
+    }
+
+    &::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 6px $background;
+
+        &:hover {
+            box-shadow: inset 0 0 6px $background-active;
+        }
+    }
+}

@@ -17,11 +17,11 @@ $default-dark-warn:    mat-palette($mat-red);
 $default-dark-theme:   mat-dark-theme($default-dark-primary, $default-dark-accent, $default-dark-warn);
 
 // include the default light theme style
-@include app-theme($default-light-theme);
+body {
+  @include app-theme($default-light-theme);
+}
 
 // include the alternative theme styles inside of a block with a CSS class
-// any component inside of an element with this CCS class will be affected by this 
-// alternate dark theme instead of the default light theme
-.dark-theme {
+body.app-dark-theme {
   @include app-theme($default-dark-theme);
 }

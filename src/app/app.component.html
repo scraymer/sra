@@ -1,13 +1,14 @@
-<div [ngClass]="{'dark-theme': isDarkTheme | async}">
-    <mat-sidenav-container class="app-container" hasBackdrop="true">
-        <mat-sidenav #sidenav class="app-sidenav" mode="push">
-            <app-nav></app-nav>
-            <app-footer></app-footer>
+<div class="app-container" appScrollEvent="app-header-hidden"
+        appScrollEventDelayDown="50" appScrollEventDelayUp="150" [appScrollEventPadding]="isHeaderFull ? 64 : 56">
+    <app-header class="app-header"></app-header>
+    <mat-sidenav-container class="app-container" [hasBackdrop]="isNavSide ? false : true">
+        <mat-sidenav #sidenav class="app-sidenav" [mode]="isNavSide ? 'side' : 'over'"
+                fixedInViewport="true" [fixedTopGap]="isHeaderFull ? 64 : 56" [disableClose]="isNavSide? true : false">
+            <app-nav class="app-nav"></app-nav>
+            <app-footer class="app-footer"></app-footer>
         </mat-sidenav>
-        <mat-sidenav-content class="app-content" appScrollbar appScrollHide="app-header-hidden" 
-            appScrollHideDelayDown="50" appScrollHideDelayUp="150" appScrollHidePadding="64">
-            <app-header></app-header>
+        <mat-sidenav-content class="app-sidenav-content" [ngStyle]="{'padding-top.px': isHeaderFull ? 64 : 56}">
             <router-outlet></router-outlet>
         </mat-sidenav-content>
     </mat-sidenav-container>
-</div> 
+</div>

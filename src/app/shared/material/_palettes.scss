@@ -6,6 +6,12 @@
  * See https://material.io/design/color/the-color-system.html#tools-for-picking-colors
  */
 
+// base scrollbar variables
+$scrollbar-background-dark: rgba(white, 0.3);
+$scrollbar-background-light: rgba(black, 0.26);
+$scrollbar-background-active-dark: rgba(white, 0.43);
+$scrollbar-background-active-light: rgba(black, 0.38);
+
 // based off #ff8700
 $app-orange: (
     50: #fff3e0,

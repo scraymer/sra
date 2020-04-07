@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ThemeService } from '@core/material/theme.service';
+import { Subscription } from 'rxjs';
 import { Article } from '../article';
 import { ArticleService } from '../article.service';
 import { ArticleListConstent } from './article-list.constent';
@@ -9,25 +10,33 @@ import { ArticleListConstent } from './article-list.constent';
     templateUrl: './article-list.component.html',
     styleUrls: ['./article-list.component.scss']
 })
-export class ArticleListComponent implements OnInit {
+export class ArticleListComponent implements OnInit, OnDestroy {
+
+    private subscriptions: Subscription;
 
     articles: Article[];
     constructionImage: string;
 
-    constructor(private articleService: ArticleService, private themeService: ThemeService) { }
-
-    ngOnInit(): void {
-        this.getArticles();
-        this.getConstructionImage();
+    constructor(private articleService: ArticleService, private themeService: ThemeService) {
+        this.subscriptions = new Subscription();
     }
 
-    private getArticles(): void {
-        this.articleService.getArticles()
+    ngOnInit(): void {
+        this.subscriptions.add(this.getArticles());
+        this.subscriptions.add(this.getConstructionImage());
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.unsubscribe();
+    }
+
+    private getArticles(): Subscription {
+        return this.articleService.getArticles()
             .subscribe(articles => this.setArticles(articles));
     }
 
-    private getConstructionImage(): void {
-        this.themeService.isDark
+    private getConstructionImage(): Subscription {
+        return this.themeService.isDark
             .subscribe(t => this.setConstructionImage(t));
     }
 

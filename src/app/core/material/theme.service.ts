@@ -8,37 +8,37 @@ import { ThemeConstant } from './theme.constant';
  * are support.
  */
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ThemeService {
 
-  /**
-   * Source subject for managing the dark theme flag state.
-   */
-  private isDarkSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    /**
+     * Source subject for managing the dark theme flag state.
+     */
+    private isDarkSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  /**
-   * Observable for the is dark theme flag.
-   */
-  isDark: Observable<boolean> = this.isDarkSubject.asObservable();
+    /**
+     * Observable for the is dark theme flag.
+     */
+    isDark: Observable<boolean> = this.isDarkSubject.asObservable();
 
-  /**
-   * Set whether or not the theme should be dark.
-   *
-   * @param isDark true for dark theme, else light theme
-   */
-  setDark(isDark: boolean): void {
-    this.isDarkSubject.next(isDark);
-    this.storage.set(ThemeConstant.IS_DARK_THEME_KEY, isDark);
-  }
+    /**
+     * Check storage service for previous session theme properties on initialization.
+     *
+     * @param storage storage to persiste theme properties
+     */
+    constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
+        const isDark: boolean = this.storage.get(ThemeConstant.IS_DARK_THEME_KEY);
+        if (isDark === true) { this.setDark(true); }
+    }
 
-  /**
-   * Check storage service for previous session theme properties on initialization.
-   *
-   * @param storage storage to persiste theme properties
-   */
-  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
-    const isDark: boolean = this.storage.get(ThemeConstant.IS_DARK_THEME_KEY);
-    if (isDark === true) { this.setDark(true); }
-  }
+    /**
+     * Set whether or not the theme should be dark.
+     *
+     * @param isDark true for dark theme, else light theme
+     */
+    setDark(isDark: boolean): void {
+        this.isDarkSubject.next(isDark);
+        this.storage.set(ThemeConstant.IS_DARK_THEME_KEY, isDark);
+    }
 }

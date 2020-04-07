@@ -5,17 +5,17 @@
 @import '~@angular/material/theming';
 
 // define a mixin that accepts a theme and outputs the theme-specific styles.
-@mixin app-scrollbar-theme($theme) {
+@mixin app-sidenav-theme($theme) {
 
     // extract the palette details needed from the theme definition
     $is-dark-theme: map-get($theme, is-dark);
 
     // define scrollbar thumb and track background color based on theme
-    $background: if($is-dark-theme,$scrollbar-background-dark, $scrollbar-background-light);
+    $background: if($is-dark-theme, $scrollbar-background-dark, $scrollbar-background-light);
     $background-active: if($is-dark-theme, $scrollbar-background-active-dark, $scrollbar-background-active-light);
 
     // define any styles affected by the theme
-    .app-scrollbar {
+    .mat-drawer-inner-container {
         @include app-scrollbar-base($background, $background-active);
     }
 }
