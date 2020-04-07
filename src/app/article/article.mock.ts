@@ -1,8 +1,9 @@
+import { environment } from '@env';
 import { Article } from './article';
 
 const PLACEHOLDER = {
-    AVATAR: 'https://picsum.photos/40/40?random=',
-    IMAGE: 'https://picsum.photos/350/200?random=',
+    AVATAR: environment.production ? 'https://picsum.photos/40/40?random=' : 'assets/placeholder-avatar.png',
+    IMAGE: environment.production ? 'https://picsum.photos/350/200?random=' : 'assets/placeholder-image.png',
     LINK: 'https://en.wikipedia.org/wiki/Foobar'
 };
 
@@ -39,8 +40,21 @@ export const ARTICLES: Article[] = [
                 + 'ut aliquip ex ea commodo consequat.'}
     ];
 
+/**
+ * Used to resolve picsum photo urls when in production mode.
+ */
 class ApplyRandomImage {
     static initialize() {
+        if (environment.production) {
+            this.resolvePicsumUrls();
+        }
+    }
+
+    /**
+     * Append id value to avatar and image values. This is used to make
+     * picsum photo urls unique in production mode only.
+     */
+    private static resolvePicsumUrls(): void {
         for (const article of ARTICLES) {
             article.avatar = article.avatar + article.id;
             article.image = article.image + article.id;
