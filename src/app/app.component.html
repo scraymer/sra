@@ -1,13 +1,13 @@
 <div class="app-container" appScrollEvent="app-header-hidden"
-        appScrollEventDelayDown="50" appScrollEventDelayUp="150" [appScrollEventPadding]="isHeaderFull ? 64 : 56">
+        appScrollEventDelayDown="50" appScrollEventDelayUp="150" [appScrollEventPadding]="breakpoints.headerLg ? 64 : 56">
     <app-header class="app-header"></app-header>
-    <mat-sidenav-container class="app-container" [hasBackdrop]="isNavSide ? false : true">
-        <mat-sidenav #sidenav class="app-sidenav" [mode]="isNavSide ? 'side' : 'over'"
-                fixedInViewport="true" [fixedTopGap]="isHeaderFull ? 64 : 56" [disableClose]="isNavSide? true : false">
+    <mat-sidenav-container class="app-container" [hasBackdrop]="breakpoints.navModeSide ? false : true">
+        <mat-sidenav #sidenav class="app-sidenav" [mode]="breakpoints.navModeSide ? 'side' : 'over'" fixedInViewport="true"
+                [fixedTopGap]="breakpoints.headerLg ? 64 : 56" [disableClose]="sidenav.mode === 'side'" opened="{{ breakpoints.navModeSide && prevNavOpened }}">
             <app-nav class="app-nav"></app-nav>
             <app-footer class="app-footer"></app-footer>
         </mat-sidenav>
-        <mat-sidenav-content class="app-sidenav-content" [ngStyle]="{'padding-top.px': isHeaderFull ? 64 : 56}">
+        <mat-sidenav-content class="app-sidenav-content" [ngStyle]="{'padding-top.px': breakpoints.headerLg ? 64 : 56}">
             <router-outlet></router-outlet>
         </mat-sidenav-content>
     </mat-sidenav-container>

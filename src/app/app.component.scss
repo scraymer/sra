@@ -32,10 +32,15 @@
     &.app-header-hidden .app-header {
         transform: translateY(-100%);
     }
+
+    // layout style when app-header is hidden
+    &.app-header-hidden .app-sidenav {
+        margin-top: -$header-toolbar-sm-height;
+    }
 }
 
 // layout style for navigation on side
-@media screen and (min-width: $breakpoint-header-full-min) {
+@media screen and (min-width: $breakpoint-header-lg-min) {
 
     .app-container {
         
@@ -47,7 +52,7 @@
 
         // layout style when app-header is hidden
         &.app-header-hidden .app-sidenav {
-            top: 0 !important;
+            margin-top: -$header-toolbar-lg-height;
         }
     }
 }
@@ -58,7 +63,7 @@
     .app-container {
 
         .app-sidenav {
-            transition: top $transition-duration $transition-function;
+            transition: margin-top $transition-duration $transition-function;
         }
     }
 }

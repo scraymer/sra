@@ -16,10 +16,11 @@ export class NavService {
      * The material side nav component configured from the shared layout nav
      * component on initialization.
      */
-    private nav: MatSidenav;
+    private _nav: MatSidenav;
 
     /**
-     * Inject dependencies on initialization.
+     * Inject dependencies on initialization. Must set the 'nav' value in order
+     * to use this service.
      *
      * @param storage used to persist opened/closed state
      */
@@ -27,32 +28,31 @@ export class NavService {
 
     /**
      * Set the material side nav component to manage.
-     *
-     * @param nav material sidenav component
      */
     setNav(nav: MatSidenav) {
-        this.nav = nav;
+        this._nav = nav;
+    }
 
-        // open nav if preivously open from another session
-        if (this.storage.get(NavConstant.IS_OPEN_KEY)) {
-            this.open();
-        }
+    /**
+     * Get previous state, default to true if undefined.
+     */
+    get prevState(): boolean {
+        return this.storage.get(NavConstant.IS_OPEN_KEY) !== false;
     }
 
     /**
      * Open the navigation drawer.
      */
     async open(): Promise<MatDrawerToggleResult> {
-        return this.nav.open().then(
+        return this._nav.open().then(
             (result) => this.persistState(result));
     }
-
 
     /**
      * Close the navigation drawer.
      */
     async close(): Promise<MatDrawerToggleResult> {
-        return this.nav.close().then(
+        return this._nav.close().then(
             (result) => this.persistState(result));
     }
 
@@ -60,8 +60,8 @@ export class NavService {
      * Toggle the navigation drawer open or close.
      */
     async toggle(): Promise<MatDrawerToggleResult> {
-        const result = await this.nav.toggle();
-        return this.persistState(result);
+        return await this._nav.toggle()
+            .then((result) => this.persistState(result));
     }
 
     /**

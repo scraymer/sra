@@ -4,7 +4,7 @@ export class AppConstant {
      * Applicaiton breakpoints used in app layout.
      */
     static readonly BREAKPOINTS = {
-        HEADER_FULL: '(min-width: 600px)',
+        HEADER_LG: '(min-width: 600px)',
         NAV_SIDE: '(min-width: 720px)'
     };
 

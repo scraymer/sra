@@ -1,68 +1,88 @@
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, HostListener, Inject, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { NavService } from '@core/layout/nav.service';
 import { ThemeService } from '@core/material/theme.service';
 import { Subscription } from 'rxjs';
 import { AppConstant } from './app.constent';
 
+interface Breakpoints {
+    headerLg?: boolean;
+    navModeSide?: boolean;
+}
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
+export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
-    private subscriptions: Subscription;
-
-    isHeaderFull: boolean;
-
-    isNavSide: boolean;
-
-    @ViewChild('sidenav')
-    sidenav: MatSidenav;
+    private _breakpoints: Breakpoints;
+    private _sidenav: MatSidenav;
+    private _subscriptions: Subscription;
+    private _prevNavOpened: boolean;
 
     constructor(private navService: NavService, private themeService: ThemeService,
                 private breakpointObserver: BreakpointObserver, private renderer: Renderer2,
                 @Inject(DOCUMENT) private document: Document) {
-        this.subscriptions = new Subscription();
+        this._breakpoints = {};
+        this._subscriptions = new Subscription();
+    }
+
+    get breakpoints(): Breakpoints {
+        return this._breakpoints;
+    }
+
+    get sidenav(): MatSidenav {
+        return this._sidenav;
+    }
+
+    @ViewChild('sidenav')
+    set sidenav(sidenav: MatSidenav) {
+        this._sidenav = sidenav;
+    }
+
+    get prevNavOpened(): boolean {
+        return this._prevNavOpened;
+    }
+
+    set prevNavOpened(prevNavOpened: boolean) {
+        this._prevNavOpened = prevNavOpened;
     }
 
     ngOnInit() {
 
         // subscribe to header and nav breakpoint observables
-        this.subscriptions.add(this.breakpointObserver.observe([
-            AppConstant.BREAKPOINTS.HEADER_FULL, AppConstant.BREAKPOINTS.NAV_SIDE
+        this._subscriptions.add(this.breakpointObserver.observe([
+            AppConstant.BREAKPOINTS.HEADER_LG, AppConstant.BREAKPOINTS.NAV_SIDE
         ]).subscribe(result => this.setBreakpoints(result)));
 
         // subscribe to theme dark mode observable
-        this.subscriptions.add(this.themeService.isDark
+        this._subscriptions.add(this.themeService.isDark
             .subscribe(isDark => this.setDarkTheme(isDark)));
+
+        // set the previous nav open state
+        // required before view init so it doesn't open
+        this.prevNavOpened = this.navService.prevState;
     }
 
-    ngOnDestroy() {
-        this.subscriptions.unsubscribe();
-    }
+    ngAfterViewInit() {
 
-    ngAfterViewInit(): void {
-
-        // define side nav in nav serivce
+        // define side nav in nav serivce, use service to interact with sidenav
         this.navService.setNav(this.sidenav);
 
         // subscribe to side nav state observable
         // update scroll disabled style on change
-        this.subscriptions.add(this.sidenav.closedStart
+        this._subscriptions.add(this.sidenav.closedStart
             .subscribe(() => this.isScrollDisabled(false)));
-        this.subscriptions.add(this.sidenav.openedStart
+        this._subscriptions.add(this.sidenav.openedStart
             .subscribe(() => this.isScrollDisabled(true)));
     }
 
-    @HostListener('window:resize')
-    ngOnResize(): void {
-
-        // on window resize, update scroll disabled style
-        this.isScrollDisabled(this.sidenav.opened);
+    ngOnDestroy() {
+        this._subscriptions.unsubscribe();
     }
 
     /**
@@ -71,8 +91,19 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
      * @param state header and nav breakpoint states
      */
     private setBreakpoints(state: BreakpointState): void {
-        this.isHeaderFull = state.breakpoints[AppConstant.BREAKPOINTS.HEADER_FULL];
-        this.isNavSide = state.breakpoints[AppConstant.BREAKPOINTS.NAV_SIDE];
+
+        const currSideMode: boolean = this.breakpoints.navModeSide;
+
+        // update layout breakpoint propeties that are bound to the view
+        this.breakpoints.headerLg = state.breakpoints[AppConstant.BREAKPOINTS.HEADER_LG];
+        this.breakpoints.navModeSide = state.breakpoints[AppConstant.BREAKPOINTS.NAV_SIDE];
+
+        // close sidenav if switching modes to over and currently open
+        if (this.sidenav && this.sidenav.opened && currSideMode === true && this.breakpoints.navModeSide === false) {
+            this.navService.close();
+        } else if (this.sidenav && this.sidenav.opened && currSideMode === false && this.breakpoints.navModeSide === true) {
+            this.isScrollDisabled(false);
+        }
     }
 
     /**
@@ -94,7 +125,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
      * @param isDisabled true to disable scrolling
      */
     private isScrollDisabled(isDisabled: boolean): void {
-        if (isDisabled && !this.isNavSide) {
+        if (isDisabled && !this.breakpoints.navModeSide) {
             this.renderer.setStyle(this.document.body, 'overflow', 'hidden');
         } else {
             this.renderer.removeStyle(this.document.body, 'overflow');
