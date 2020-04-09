@@ -29,12 +29,12 @@
     }
 
     // layout style when app-header is hidden
-    &.app-header-hidden .app-header {
+    &.app-header-hidden:not(.app-sidenav-over) .app-header {
         transform: translateY(-100%);
     }
 
     // layout style when app-header is hidden
-    &.app-header-hidden .app-sidenav {
+    &.app-header-hidden:not(.app-sidenav-over) .app-sidenav {
         margin-top: -$header-toolbar-sm-height;
     }
 }
@@ -51,7 +51,7 @@
         }
 
         // layout style when app-header is hidden
-        &.app-header-hidden .app-sidenav {
+        &.app-header-hidden:not(.app-sidenav-over) .app-sidenav {
             margin-top: -$header-toolbar-lg-height;
         }
     }
