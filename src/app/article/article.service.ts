@@ -4,6 +4,7 @@ import { RedditService } from '@core/reddit/reddit.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import * as Snoowrap from 'snoowrap';
 import { Article } from './article';
+import { ArticleSort } from './article.enum';
 
 @Injectable({
     providedIn: 'root'
@@ -23,8 +24,23 @@ export class ArticleService {
         return articles;
     }
 
-    getArticles(): Promise<Article[]> {
-        return this.service.run.getHot()
+    getArticles(sort: ArticleSort = ArticleSort.Best, subreddit?: string): Promise<Article[]> {
+
+        let req: Promise<Snoowrap.Listing<Snoowrap.Submission>>;
+
+        if (sort === ArticleSort.Best) {
+            req = this.service.run.getBest();
+        } else if (sort === ArticleSort.New) {
+            req = this.service.run.getNew(subreddit || undefined);
+        } else if (sort === ArticleSort.Top) {
+            req = this.service.run.getTop(subreddit || undefined);
+        } else if (sort === ArticleSort.Rising) {
+            req = this.service.run.getRising(subreddit || undefined);
+        } else {
+            req = this.service.run.getHot(subreddit || undefined);
+        }
+
+        return req
             .then((s) => this.toArticles(s))
             .then((s) => this.setArticles(s));
     }

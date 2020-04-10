@@ -26,6 +26,10 @@
         display: flex;
         flex-flow: column nowrap;
 
+        .mat-card-header .mat-card-title {
+            cursor: pointer;
+        }
+
         .mat-card-content {
             flex: 1 1 auto;
             margin-bottom: 0;

@@ -5,3 +5,12 @@
 .fill-remaining-space {
     flex: 1 1 auto;
 }
+
+// hide menu for now
+.app-header-title {
+    margin-left: 0;
+}
+
+.app-header-menu-toggle {
+    display: none;
+}
