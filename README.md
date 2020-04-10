@@ -1,3 +1,5 @@
+![Build and Deploy](https://github.com/scraymer/sra/workflows/Build%20and%20Deploy/badge.svg)
+
 # Simple Reddit App (SRA)
 
 A Simple Reddit App (SRA) using Google Material Design dark and light appearance without infinite scrolling. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.6.
