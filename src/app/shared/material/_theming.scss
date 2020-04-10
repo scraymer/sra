@@ -4,6 +4,7 @@
 @import 'shared/layout/body/body.theme';
 @import 'shared/layout/header/header.theme';
 @import 'shared/layout/scrollbar/scrollbar.theme';
+@import 'shared/material/card/card.theme';
 @import 'shared/material/sidenav/sidenav.theme';
 
 // all components that require theming within the application
@@ -17,5 +18,6 @@
     @include app-body-theme($theme);
     @include app-header-theme($theme);
     @include app-scrollbar-theme($theme);
+    @include app-card-theme($theme);
     @include app-sidenav-theme($theme);
 }

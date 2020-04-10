@@ -1,4 +1,7 @@
-<div class="app-article-list-container">
+<div class="app-article-loading-container" [ngClass]="{'app-article-list-loading': loading}">
+    <mat-spinner class="app-article-loading-spinner" color="primary" diameter="40" strokeWidth="2"></mat-spinner>
+</div>
+<div class="app-article-list-container" [ngClass]="{'app-article-list-loading': loading}">
     <mat-card class="app-article-list-card app-under-contruction">
         <mat-card-header>
             <mat-card-title>Under Construction</mat-card-title>
@@ -8,10 +11,12 @@
             <img mat-card-image alt="Under Construction" [src]="constructionImage">
         </mat-card-content>
     </mat-card>
-    <mat-card class="app-article-list-card" *ngFor="let article of articles">
+    <mat-card class="app-article-list-card"  *ngFor="let article of articles">
         <mat-card-header>
             <img mat-card-avatar [src]="article.avatar">
-            <mat-card-title [routerLink]="'/' + article.subreddit">{{ article.subreddit }}</mat-card-title>
+            <mat-card-title class="app-card-title-link" [routerLink]="'/' + article.subreddit">
+                {{ article.subreddit }}
+            </mat-card-title>
             <mat-card-subtitle>{{ article.username }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
@@ -23,9 +28,8 @@
             <a mat-button color="primary" [href]="article.comments" target="_blank">COMMENT</a>
         </mat-card-actions>
     </mat-card>
+    <mat-card class="app-article-list-card app-article-list-empty-card mat-primary"
+        *ngIf="loading === false && articles.length === 0">
+        <p>No results found for {{ subreddit ? 'r/' + subreddit : 'the front page' }}.</p>
+    </mat-card>
 </div>
-<ng-template [ngIf]="articles.length === 0">
-    <div class="app-article-loading-container">
-        <mat-spinner class="app-article-loading-spinner" color="primary" diameter="40" strokeWidth="2"></mat-spinner>
-    </div>
-</ng-template>

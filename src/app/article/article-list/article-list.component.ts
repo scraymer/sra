@@ -22,12 +22,17 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     sort: ArticleSort;
     subreddit: string;
 
+    loading: boolean;
+
     constructor(private articleService: ArticleService, private themeService: ThemeService,
                 private route: ActivatedRoute) {
         this.subscriptions = new Subscription();
     }
 
     ngOnInit(): void {
+
+        // set loading flag to try, this will be set to false on first article subscription fufilled
+        this.loading = true;
 
         // subscribe to theme, article, and route param changes
         this.subscriptions.add(this.themeService.isDark.subscribe(t => this.setConstructionImage(t)));
@@ -41,14 +46,21 @@ export class ArticleListComponent implements OnInit, OnDestroy {
 
     getArticles(params: ParamMap): void {
 
+        // set loading flag to try, this will be set to false on first article subscription fufilled
+        this.loading = true;
+
         this.sort = params.get('sort') ? params.get('sort').toLowerCase() as ArticleSort : null;
         this.subreddit = params.get('subreddit') || null;
 
-        this.articleService.getArticles(this.sort, this.subreddit);
+        this.articleService.getArticles(this.sort, this.subreddit)
+            .catch((e) => this.loading = false);
     }
 
     private setArticles(articles: Article[]): void {
         this.articles = articles;
+
+        // set loading flag to false, this completes getArticle and ngOnInit
+        this.loading = false;
     }
 
     private setConstructionImage(isDarkTheme: boolean): void {

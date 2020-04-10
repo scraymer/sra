@@ -1,0 +1,35 @@
+@import 'shared/mixin';
+@import 'shared/material/palettes';
+
+// import library functions for theme creation
+@import '~@angular/material/theming';
+
+// use to set the background and foreground colors from a palette
+@mixin app-card-base($palette) {
+    background: mat-color($palette);
+    color: mat-color($palette, default-contrast);
+}
+
+// define a mixin that accepts a theme and outputs the theme-specific styles.
+@mixin app-card-theme($theme) {
+
+    // extract the palette details needed from the theme definition
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+
+    // define primary styles affected by the theme
+    .mat-card.mat-primary  {
+        @include app-card-base($primary);
+    }
+
+    // define accent styles affected by the theme
+    .mat-card.mat-accent {
+        @include app-card-base($accent);
+    }
+
+    // define warn styles affected by the theme
+    .mat-card.mat-warn {
+        @include app-card-base($warn);
+    }
+}
