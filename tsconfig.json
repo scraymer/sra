@@ -18,7 +18,8 @@
     "paths": {
       "@core/*": ["src/app/core/*"],
       "@env": ["src/environments/environment"],
-      "@shared/*": ["src/app/shared/*"]
+      "@shared/*": ["src/app/shared/*"],
+      "stream": ["src/empty.ts"]
     }
   },
   "angularCompilerOptions": {

@@ -8,6 +8,7 @@
 
     .mat-card-image {
         margin-bottom: -4px;
+        margin-top: 0;
     }
 }
 
@@ -40,5 +41,14 @@
                 object-fit: cover;
             }
         }
+    }
+}
+
+.app-article-loading-container {
+    padding: 16px;
+    overflow: hidden;
+
+    .app-article-loading-spinner {
+        margin: 0 auto;
     }
 }

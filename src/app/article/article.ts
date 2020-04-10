@@ -3,11 +3,12 @@
  * details such as username to user id and name.
  */
 export interface Article {
-    id: number;
+    id: string;
     title: string;
     subreddit: string;
     username: string;
     link: string;
+    comments: string;
     avatar: string;
     image: string;
 }

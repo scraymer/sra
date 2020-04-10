@@ -22,22 +22,17 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.subscriptions.add(this.getArticles());
-        this.subscriptions.add(this.getConstructionImage());
+
+        // subscribe to theme and article services
+        this.subscriptions.add(this.themeService.isDark.subscribe(t => this.setConstructionImage(t)));
+        this.subscriptions.add(this.articleService.articles.subscribe(t => this.setArticles(t)));
+
+        // get articles to initialize content
+        this.articleService.getArticles();
     }
 
     ngOnDestroy(): void {
         this.subscriptions.unsubscribe();
-    }
-
-    private getArticles(): Subscription {
-        return this.articleService.getArticles()
-            .subscribe(articles => this.setArticles(articles));
-    }
-
-    private getConstructionImage(): Subscription {
-        return this.themeService.isDark
-            .subscribe(t => this.setConstructionImage(t));
     }
 
     private setArticles(articles: Article[]): void {

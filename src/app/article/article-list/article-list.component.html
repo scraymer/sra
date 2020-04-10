@@ -1,8 +1,12 @@
 <div class="app-article-list-container">
     <mat-card class="app-article-list-card app-under-contruction">
-        <mat-card-title>Under Construction</mat-card-title>
-        <mat-card-subtitle>Simple Reddit App</mat-card-subtitle>
-        <img mat-card-image alt="Under Construction" [src]="constructionImage">
+        <mat-card-header>
+            <mat-card-title>Under Construction</mat-card-title>
+            <mat-card-subtitle>Simple Reddit App</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <img mat-card-image alt="Under Construction" [src]="constructionImage">
+        </mat-card-content>
     </mat-card>
     <mat-card class="app-article-list-card" *ngFor="let article of articles">
         <mat-card-header>
@@ -16,7 +20,12 @@
         </mat-card-content>
         <mat-card-actions>
             <a mat-button color="primary" [href]="article.link" target="_blank">OPEN</a>
-            <a mat-button color="primary" [href]="article.link" target="_blank">COMMENT</a>
+            <a mat-button color="primary" [href]="article.comments" target="_blank">COMMENT</a>
         </mat-card-actions>
     </mat-card>
 </div>
+<ng-template [ngIf]="articles.length === 0">
+    <div class="app-article-loading-container">
+        <mat-spinner class="app-article-loading-spinner" color="primary" diameter="40" strokeWidth="2"></mat-spinner>
+    </div>
+</ng-template>
