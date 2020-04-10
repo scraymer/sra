@@ -71,24 +71,23 @@
 }
 
 .app-article-loading-container {
-    padding: 64px;
+    padding: 16px;
     overflow: hidden;
     position: fixed;
-    top: 0;
     left: 0;
     right: 0;
     z-index: 2;
 
     opacity: 0;
-    transform: translateY(-100%);
+    top: 0;
 
-    transition-property: opacity, transform;
+    transition-property: opacity, top;
     transition-duration: $transition-duration;
     transition-timing-function: $transition-function;
 
     &.app-article-list-loading {
         opacity: 1;
-        transform: translateY(0%);
+        top: 64px;
     }
 
     .app-article-loading-spinner {
