@@ -2,6 +2,7 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Event, NavigationEnd, Router } from '@angular/router';
 import { NavService } from '@core/layout/nav.service';
 import { ThemeService } from '@core/material/theme.service';
 import { Subscription } from 'rxjs';
@@ -26,7 +27,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
     constructor(private navService: NavService, private themeService: ThemeService,
                 private breakpointObserver: BreakpointObserver, private renderer: Renderer2,
-                @Inject(DOCUMENT) private document: Document) {
+                @Inject(DOCUMENT) private document: Document, private router: Router) {
         this._breakpoints = {};
         this._subscriptions = new Subscription();
     }
@@ -52,7 +53,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
         this._prevNavOpened = prevNavOpened;
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
 
         // subscribe to header and nav breakpoint observables
         this._subscriptions.add(this.breakpointObserver.observe([
@@ -66,9 +67,13 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
         // set the previous nav open state
         // required before view init so it doesn't open
         this.prevNavOpened = this.navService.prevState;
+
+        // subscribe to route changes, this is used to close
+        // the sidenav when in over mode only
+        this.router.events.subscribe((e) => this.onRouteEvent(e));
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
 
         // define side nav in nav serivce, use service to interact with sidenav
         this.navService.setNav(this.sidenav);
@@ -81,8 +86,16 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
             .subscribe(() => this.isScrollDisabled(true)));
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this._subscriptions.unsubscribe();
+    }
+
+    onRouteEvent(event: Event): void {
+
+        // close navigation on route change when in over mode
+        if (event instanceof NavigationEnd && this.sidenav.mode === 'over') {
+            this.navService.close();
+        }
     }
 
     /**

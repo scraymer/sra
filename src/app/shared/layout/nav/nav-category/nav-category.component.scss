@@ -1,0 +1,28 @@
+@import 'shared/variables';
+
+button.app-list-category {
+    background: none;
+    border: none;
+    text-align: left;
+
+    .mat-list-item-content {
+        padding-right: 8px;
+    }
+
+    .app-list-category-label {
+        flex: 1;
+    }
+
+    .app-list-category-icon {
+        margin-right: -8px;
+        transition: transform $transition-duration $transition-function;
+    }
+    
+    &:first-child {
+        margin-top: 0;
+    }
+
+    &.expanded .app-list-category-icon {
+        transform: rotate(180deg);
+    }
+}

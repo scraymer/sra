@@ -3,6 +3,7 @@
 // import app theme styles
 @import 'shared/layout/body/body.theme';
 @import 'shared/layout/header/header.theme';
+@import 'shared/layout/nav/nav.theme';
 @import 'shared/layout/scrollbar/scrollbar.theme';
 @import 'shared/material/card/card.theme';
 @import 'shared/material/sidenav/sidenav.theme';
@@ -17,6 +18,7 @@
     // include app themes
     @include app-body-theme($theme);
     @include app-header-theme($theme);
+    @include app-nav-theme($theme);
     @include app-scrollbar-theme($theme);
     @include app-card-theme($theme);
     @include app-sidenav-theme($theme);

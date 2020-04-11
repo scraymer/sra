@@ -14,7 +14,7 @@ import { ArticleListConstent } from './article-list.constent';
 })
 export class ArticleListComponent implements OnInit, OnDestroy {
 
-    private subscriptions: Subscription;
+    private subscriptions: Subscription = new Subscription();
 
     articles: Article[];
     constructionImage: string;
@@ -25,9 +25,7 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     loading: boolean;
 
     constructor(private articleService: ArticleService, private themeService: ThemeService,
-                private route: ActivatedRoute) {
-        this.subscriptions = new Subscription();
-    }
+                private route: ActivatedRoute) {}
 
     ngOnInit(): void {
 

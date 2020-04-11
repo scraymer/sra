@@ -1,7 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import { MatDrawerToggleResult, MatSidenav } from '@angular/material/sidenav';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { NavItemCategory, NavItemLink } from './nav';
 import { NavConstant } from './nav.constant';
+import { DEFAULT_NAV_ITEMS } from './nav.default';
 
 /**
  * Service used to control the application navigation state such as opening,
@@ -11,6 +14,11 @@ import { NavConstant } from './nav.constant';
     providedIn: 'root'
 })
 export class NavService {
+
+    /**
+     * The list of navigation items displayed in the sidenav.
+     */
+    private _items: BehaviorSubject<Array<NavItemCategory|NavItemLink>> = new BehaviorSubject<Array<NavItemCategory|NavItemLink>>([]);
 
     /**
      * The material side nav component configured from the shared layout nav
@@ -24,13 +32,22 @@ export class NavService {
      *
      * @param storage used to persist opened/closed state
      */
-    constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {}
+    constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
+        this._items.next(DEFAULT_NAV_ITEMS);
+    }
 
     /**
      * Set the material side nav component to manage.
      */
     setNav(nav: MatSidenav) {
         this._nav = nav;
+    }
+
+    /**
+     * Get the list of side navigation items.
+     */
+    get items(): Observable<any> {
+        return this._items.asObservable();
     }
 
     /**

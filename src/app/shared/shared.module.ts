@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import * as Layout from '@shared/layout';
 import * as Material from '@shared/material';
 
@@ -10,6 +11,7 @@ import * as Material from '@shared/material';
   ],
   imports: [
     CommonModule,
+    RouterModule,
     Material.Modules
   ],
   exports: [
