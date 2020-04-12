@@ -40,7 +40,7 @@
 }
 
 // layout style for navigation on side
-@media screen and (min-width: $breakpoint-header-lg-min) {
+@media screen and (min-width: $breakpoint-nav-side-min) {
 
     .app-container {
         
@@ -58,7 +58,7 @@
 }
 
 // layout style when header is full
-@media screen and (min-width: $breakpoint-nav-side-min) {
+@media screen and (min-width: $breakpoint-header-lg-min) {
 
     .app-container {
 

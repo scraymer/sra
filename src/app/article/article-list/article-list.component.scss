@@ -41,7 +41,7 @@
             margin-bottom: 0;
             max-width: 400px;
             min-width: 100%;
-            
+
             display: flex;
             flex-flow: column nowrap;
 
@@ -49,6 +49,7 @@
                 flex: 1 1 auto;
                 overflow: hidden;
                 object-fit: cover;
+                object-position: top center;
             }
         }
 
@@ -115,5 +116,15 @@
 
     .app-article-loading-spinner {
         margin: 0 auto;
+    }
+}
+
+// layout style when header is full
+@media screen and (min-width: $breakpoint-nav-side-min) {
+    .app-article-list-container .app-article-list-card {
+    
+        .mat-card-content {
+            max-height: 800px;
+        }
     }
 }

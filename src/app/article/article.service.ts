@@ -87,10 +87,9 @@ export class ArticleService {
 
         let result: string = null;
 
-        // use preview links if available, use largest under 200h or 350w
+        // use preview links if available, use largest resolution available
         if (source && source.preview && source.preview.images && source.preview.images.length > 0) {
-            const res = source.preview.images[0].resolutions
-                .filter((r) => r.height <= 200 || r.width <= 400);
+            const res = source.preview.images[0].resolutions;
             if (res && res.length > 0) {
                 result = res[res.length - 1].url;
             }
