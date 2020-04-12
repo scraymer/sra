@@ -13,40 +13,37 @@ export class ArticleService {
 
     private _articles: BehaviorSubject<Article[]> = new BehaviorSubject<Article[]>([]);
 
-    constructor(private service: RedditService) {}
+    constructor(private redditService: RedditService) {}
 
     get articles(): Observable<Article[]> {
         return this._articles.asObservable();
     }
 
-    setArticles(articles: Article[]): Article[] {
+    setArticles(articles: Article[]): void {
         this._articles.next(articles);
-        return articles;
     }
 
-    getArticles(sort: ArticleSort = ArticleSort.Best, subreddit?: string): Promise<Article[]> {
+    async getArticles(sort: ArticleSort = ArticleSort.Best, subreddit?: string): Promise<Article[]> {
 
         let req: Promise<Snoowrap.Listing<Snoowrap.Submission>>;
 
         if (sort === ArticleSort.Best) {
-            req = this.service.run.getBest();
+            req = this.redditService.run.getBest();
         } else if (sort === ArticleSort.New) {
-            req = this.service.run.getNew(subreddit || undefined);
+            req = this.redditService.run.getNew(subreddit || undefined);
         } else if (sort === ArticleSort.Top) {
-            req = this.service.run.getTop(subreddit || undefined);
+            req = this.redditService.run.getTop(subreddit || undefined);
         } else if (sort === ArticleSort.Rising) {
-            req = this.service.run.getRising(subreddit || undefined);
+            req = this.redditService.run.getRising(subreddit || undefined);
         } else {
-            req = this.service.run.getHot(subreddit || undefined);
+            req = this.redditService.run.getHot(subreddit || undefined);
         }
 
-        return req
-            .then((s) => this.toArticles(s))
-            .then((s) => this.setArticles(s));
-    }
+        const result = (await req)
+            .map((s) => this.toArticle(s));
 
-    private toArticles(source: Snoowrap.Listing<Snoowrap.Submission>): Article[] {
-        return source.map((s) => this.toArticle(s));
+        this.setArticles(result);
+        return result;
     }
 
     private toArticle(source: Snoowrap.Submission): Article {

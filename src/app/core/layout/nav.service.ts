@@ -1,7 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
 import { MatDrawerToggleResult, MatSidenav } from '@angular/material/sidenav';
+import { RedditService } from '@core/reddit/reddit.service';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import * as Snoowrap from 'snoowrap';
 import { NavItemCategory, NavItemLink } from './nav';
 import { NavConstant } from './nav.constant';
 import { DEFAULT_NAV_ITEMS } from './nav.default';
@@ -32,8 +34,23 @@ export class NavService {
      *
      * @param storage used to persist opened/closed state
      */
-    constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
+    constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, private redditService: RedditService) {
         this.setItems(DEFAULT_NAV_ITEMS);
+        this.getSubscriptions();
+    }
+
+    /**
+     * Get the list of side navigation items.
+     */
+    get items(): Observable<Array<NavItemCategory|NavItemLink>> {
+        return this._items.asObservable();
+    }
+
+    /**
+     * Get previous state, default to true if undefined.
+     */
+    get prevState(): boolean {
+        return this.storage.get(NavConstant.IS_OPEN_KEY) !== false;
     }
 
     /**
@@ -51,17 +68,43 @@ export class NavService {
     }
 
     /**
-     * Get the list of side navigation items.
+     * Set the navigation item links for the subscription category.
      */
-    get items(): Observable<Array<NavItemCategory|NavItemLink>> {
-        return this._items.asObservable();
+    setSubscriptions(subreddits: Array<NavItemLink>): void {
+
+        const curr: Array<NavItemCategory|NavItemLink> = this._items.getValue();
+
+        // only replace root level category sub items where its label is 'Subscription'
+        const result = curr.map((i) => {
+            if (i.type === 'category' && i.label === 'Subscriptions') {
+                i.subItems = subreddits;
+            }
+            return i;
+        });
+
+        this._items.next(result);
     }
 
     /**
-     * Get previous state, default to true if undefined.
+     * Get logged in user's subscriptions, else use default subreddits. Then set the
+     * navigation subscription category items with the response.
      */
-    get prevState(): boolean {
-        return this.storage.get(NavConstant.IS_OPEN_KEY) !== false;
+    async getSubscriptions(isUser: boolean = false): Promise<Array<NavItemLink>> {
+
+        let req: Promise<Snoowrap.Listing<Snoowrap.Subreddit>>;
+
+        if (isUser) {
+            req = Promise.resolve(this.redditService.run.getSubscriptions());
+        } else {
+            req = this.redditService.run.getDefaultSubreddits();
+        }
+
+        const result: Array<NavItemLink> = (await req)
+            .map((s) => this.toNavItemLink(s))
+            .sort((a, b) => a.label.localeCompare(b.label));
+
+        this.setSubscriptions(result);
+        return result;
     }
 
     /**
@@ -100,16 +143,15 @@ export class NavService {
     }
 
     /**
-     * TODO: Compare items by sort order.
+     * Map Snoowrap.Subreddit to NavItemLink.
      */
-    private sortItems(a: NavItemCategory|NavItemLink, b: NavItemCategory|NavItemLink): number {
-
-        // if category, sort all sub items
-        if (a.type === 'category' && a.subItems) {
-            a.subItems = a.subItems.sort(this.sortItems);
-        }
-
-        // use sortorder value
-        return a.sortOrder - b.sortOrder;
+    private toNavItemLink(source: Snoowrap.Subreddit): NavItemLink {
+        return {
+            label: source.display_name_prefixed,
+            sortOrder: 1,
+            type: 'link',
+            route: source.display_name_prefixed,
+            avatar: source.icon_img
+        };
     }
 }
