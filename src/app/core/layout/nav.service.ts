@@ -33,7 +33,7 @@ export class NavService {
      * @param storage used to persist opened/closed state
      */
     constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
-        this._items.next(DEFAULT_NAV_ITEMS);
+        this.setItems(DEFAULT_NAV_ITEMS);
     }
 
     /**
@@ -44,9 +44,16 @@ export class NavService {
     }
 
     /**
+     * Set the navigation items, they will be sorted automatically.
+     */
+    setItems(items: Array<NavItemCategory|NavItemLink>): void {
+        this._items.next(items);
+    }
+
+    /**
      * Get the list of side navigation items.
      */
-    get items(): Observable<any> {
+    get items(): Observable<Array<NavItemCategory|NavItemLink>> {
         return this._items.asObservable();
     }
 
@@ -90,5 +97,19 @@ export class NavService {
         const isOpen = result === 'open' ? true : false;
         this.storage.set(NavConstant.IS_OPEN_KEY, isOpen);
         return result;
+    }
+
+    /**
+     * TODO: Compare items by sort order.
+     */
+    private sortItems(a: NavItemCategory|NavItemLink, b: NavItemCategory|NavItemLink): number {
+
+        // if category, sort all sub items
+        if (a.type === 'category' && a.subItems) {
+            a.subItems = a.subItems.sort(this.sortItems);
+        }
+
+        // use sortorder value
+        return a.sortOrder - b.sortOrder;
     }
 }

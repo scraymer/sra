@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { NavItemCategory, NavItemLink } from '@core/layout/nav';
 import { NavService } from '@core/layout/nav.service';
 import { Subscription } from 'rxjs';
@@ -15,7 +14,7 @@ export class NavComponent implements OnDestroy, OnInit {
 
     items: Array<NavItemCategory|NavItemLink>;
 
-    constructor(private navService: NavService, private router: Router) {}
+    constructor(private navService: NavService) {}
 
     ngOnInit(): void {
         this.subscriptions.add(this.navService.items.subscribe(t => this.items = t));
@@ -26,9 +25,6 @@ export class NavComponent implements OnDestroy, OnInit {
     }
 
     isActive(): boolean {
-
-
-
         return true;
     }
 }
