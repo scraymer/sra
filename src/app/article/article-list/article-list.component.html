@@ -23,6 +23,10 @@
         <mat-card-actions>
             <a mat-button color="primary" [href]="article.link" target="_blank">OPEN</a>
             <a mat-button color="primary" [href]="article.comments" target="_blank">COMMENT</a>
+            <span class="fill-remaining-space"></span>
+            <button mat-icon-button color="primary" [cdkCopyToClipboard]="article.link">
+                <mat-icon>share</mat-icon>
+            </button>
         </mat-card-actions>
     </mat-card>
     <mat-card class="app-article-list-card app-article-list-empty-card mat-primary"

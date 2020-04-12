@@ -51,6 +51,17 @@
                 object-fit: cover;
             }
         }
+
+        .mat-card-actions {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            white-space: nowrap;
+
+            .fill-remaining-space {
+                flex: 1 1 auto;
+            }
+        }
     }
 }
 
