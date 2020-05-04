@@ -36,7 +36,6 @@ export class NavService {
      */
     constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, private redditService: RedditService) {
         this.setItems(DEFAULT_NAV_ITEMS);
-        this.getSubscriptions();
     }
 
     /**
@@ -68,6 +67,15 @@ export class NavService {
     }
 
     /**
+     * Wrapper method to get logged in user's subscriptions, else use
+     * default subreddits and result in items list.
+     */
+    refreshSubscriptions(isUser: boolean = false): void {
+        this.getSubscriptions(isUser)
+            .then((r) => this.setSubscriptions(r));
+    }
+
+    /**
      * Set the navigation item links for the subscription category.
      */
     setSubscriptions(subreddits: Array<NavItemLink>): void {
@@ -86,8 +94,7 @@ export class NavService {
     }
 
     /**
-     * Get logged in user's subscriptions, else use default subreddits. Then set the
-     * navigation subscription category items with the response.
+     * Get logged in user's subscriptions, else use default subreddits.
      */
     async getSubscriptions(isUser: boolean = false): Promise<Array<NavItemLink>> {
 
@@ -103,7 +110,6 @@ export class NavService {
             .map((s) => this.toNavItemLink(s))
             .sort((a, b) => a.label.localeCompare(b.label));
 
-        this.setSubscriptions(result);
         return result;
     }
 

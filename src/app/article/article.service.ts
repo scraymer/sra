@@ -92,6 +92,6 @@ export class ArticleService {
             }
         }
 
-        return result ? result : 'assets/placeholder-image.png';
+        return result;
     }
 }

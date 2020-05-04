@@ -71,6 +71,9 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
         // subscribe to route changes, this is used to close
         // the sidenav when in over mode only
         this.router.events.subscribe((e) => this.onRouteEvent(e));
+
+        // populate side navigation subscriptions
+        this.navService.refreshSubscriptions();
     }
 
     ngAfterViewInit(): void {

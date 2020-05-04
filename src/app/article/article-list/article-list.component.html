@@ -18,7 +18,7 @@
         </mat-card-header>
         <mat-card-content>
             <p>{{ article.title }}</p>
-            <img mat-card-image [src]="article.image" alt="Photo of a Shiba Inu">
+            <img mat-card-image *ngIf="article.image" [src]="article.image" [alt]="article.title">
         </mat-card-content>
         <mat-card-actions>
             <a mat-button color="primary" [href]="article.link" target="_blank">OPEN</a>
