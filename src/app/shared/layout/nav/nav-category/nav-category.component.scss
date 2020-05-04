@@ -17,7 +17,7 @@ button.app-list-category {
         margin-right: -8px;
         transition: transform $transition-duration $transition-function;
     }
-    
+
     &:first-child {
         margin-top: 0;
     }
@@ -27,6 +27,7 @@ button.app-list-category {
     }
 }
 
+// hide category sub items when the category is collapsed
 .app-list-category-content {
     overflow: hidden;
 }

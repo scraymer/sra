@@ -1,3 +1,39 @@
-mat-list-item.mat-list-item-disabled {
-    opacity: .5;
+// Ensure proper  encapsulation is used for ALL styles as
+// as component encapsulation is set to None. This is done
+// so that we can overwrite angular material styles slightly.
+.app-nav-list {
+
+    .app-nav-category {
+
+        // indent category sub items
+        .app-nav-category-item {
+            padding-left: 16px;
+        }
+    }
+
+    .mat-list-item {
+
+        // force all avators to be the same size as icons
+        .mat-list-item-content .mat-list-avatar {
+            height: 32px;
+            width: 32px;
+        }
+
+        // ensure all list text is indented the same when avatars are used
+        &.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,
+        &.mat-list-item-with-avatar .mat-list-item-content .app-list-category-label {
+            padding-left: 16px;
+        }
+
+        // ensure all list text is indented the same when no avatars are used
+        &:not(.mat-list-item-with-avatar) .mat-list-item-content .mat-list-text,
+        &:not(.mat-list-item-with-avatar) .mat-list-item-content .app-list-category-label {
+            padding-left: 48px;
+        }
+
+        // disabled items are slightly greyed out
+        &.mat-list-item-disabled {
+            opacity: .5;
+        }
+    }
 }

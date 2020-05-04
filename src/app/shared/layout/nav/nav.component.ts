@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { NavItemCategory, NavItemLink } from '@core/layout/nav';
 import { NavService } from '@core/layout/nav.service';
 import { Subscription } from 'rxjs';
@@ -6,7 +6,8 @@ import { Subscription } from 'rxjs';
 @Component({
     selector: 'app-nav',
     templateUrl: './nav.component.html',
-    styleUrls: ['./nav.component.scss']
+    styleUrls: ['./nav.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class NavComponent implements OnDestroy, OnInit {
 

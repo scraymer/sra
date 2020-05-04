@@ -2,16 +2,17 @@
     <ng-container *ngFor="let item of items">
         <mat-list-item *ngIf="item.type === 'link'" [routerLink]="item.route"
                 routerLinkActive="app-nav-item-active-primary" [disabled]="item.disabled">
-            <mat-icon matListIcon *ngIf="item.icon">{{ item.icon }}</mat-icon>
+            <mat-icon matListIcon *ngIf="item.icon && !item.avatar">{{ item.icon }}</mat-icon>
             <img matListAvatar *ngIf="item.avatar" [src]="item.avatar">
             <a mat-line>{{ item.label }}</a>
         </mat-list-item>
-        <app-nav-category [label]="item.label" *ngIf="item.type === 'category' && item.subItems && item.subItems.length > 0"
-                routerLinkActive="app-nav-item-active-primary">
+        <app-nav-category [label]="item.label" [icon]="item.icon" *ngIf="item.type === 'category' && item.subItems && item.subItems.length > 0"
+                class="app-nav-category" routerLinkActive="app-nav-item-active-primary">
             <ng-container *ngFor="let subItem of item.subItems; let subIndex = index">
-                <mat-list-item class="app-color-primary" *ngIf="subItem.type === 'link'" [routerLink]="subItem.route"
+                <mat-list-item class="app-color-primary app-nav-category-item" *ngIf="subItem.type === 'link'" [routerLink]="subItem.route"
                         routerLinkActive="app-nav-item-active-primary" [disabled]="subItem.disabled">
-                    <img matListAvatar [src]="subItem.avatar || ('https://picsum.photos/40?' + subIndex)">
+                    <mat-icon matListIcon *ngIf="subItem.icon && !subItem.avatar">{{ subItem.icon }}</mat-icon>
+                    <img matListAvatar *ngIf="subItem.avatar" [src]="subItem.avatar">
                     <a mat-line>{{ subItem.label }}</a>
                 </mat-list-item>
             </ng-container>

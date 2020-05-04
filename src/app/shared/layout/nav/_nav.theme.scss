@@ -28,7 +28,7 @@
     }
 }
 
-// define a mixin that accepts a theme and outputs the theme-specific styles.
+// define a mixin that accepts a theme and outputs the theme-specific styles
 @mixin app-nav-theme($theme) {
 
     // extract the palettes needed from the theme definition
@@ -37,31 +37,31 @@
     $warn: map-get($theme, warn);
     $foreground: map-get($theme, foreground);
 
-    // define any styles affected by the theme.
+    // define any styles affected by the theme
     mat-nav-list.app-nav-list {
         
         .mat-list-item,
-        app-nav-category .app-list-category {
+        .app-nav-category .app-list-category {
             @include app-nav-item-base($foreground);
         }
 
         .mat-list-item.app-nav-item-active,
-        app-nav-category.app-nav-item-active .app-list-category:not(.expanded) {
+        .app-nav-category.app-nav-item-active .app-list-category:not(.expanded) {
             @include app-nav-item-active-base($foreground, text);
         }
 
         .mat-list-item.app-nav-item-active-primary,
-        app-nav-category.app-nav-item-active-primary .app-list-category:not(.expanded) {
+        .app-nav-category.app-nav-item-active-primary .app-list-category:not(.expanded) {
             @include app-nav-item-active-base($primary);
         }
 
         .mat-list-item.app-nav-item-active-accent,
-        app-nav-category.app-nav-item-active-accent .app-list-category:not(.expanded) {
+        .app-nav-category.app-nav-item-active-accent .app-list-category:not(.expanded) {
             @include app-nav-item-active-base($accent);
         }
 
         .mat-list-item.app-nav-item-active-warn,
-        app-nav-category.app-nav-item-active-warn .app-list-category:not(.expanded) {
+        .app-nav-category.app-nav-item-active-warn .app-list-category:not(.expanded) {
             @include app-nav-item-active-base($warn);
         }
     }

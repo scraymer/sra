@@ -156,6 +156,7 @@ export class NavService {
             label: source.display_name_prefixed,
             sortOrder: 1,
             type: 'link',
+            icon: 'bookmark',
             route: source.display_name_prefixed,
             avatar: source.icon_img
         };

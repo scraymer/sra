@@ -2,6 +2,7 @@ export interface NavItem {
     label: string;
     sortOrder: number;
     type: NavItemType;
+    icon?: string;
 }
 
 export interface NavItemCategory extends NavItem {
@@ -14,7 +15,6 @@ export interface NavItemLink extends NavItem {
     route: string;
     disabled?: boolean;
     avatar?: string;
-    icon?: string;
 }
 
 export type NavItemType = 'category' | 'link';

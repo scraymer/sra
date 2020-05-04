@@ -13,6 +13,9 @@ export class NavCategoryComponent extends CdkAccordionItem {
   @Input()
   label: string;
 
+  @Input()
+  icon: string;
+
   getExpandedState(): MatExpansionPanelState {
     return this.expanded ? 'expanded' : 'collapsed';
   }

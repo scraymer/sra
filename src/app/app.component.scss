@@ -20,12 +20,14 @@
         min-width: 260px;
     }
 
+    .app-nav {
+        display: block;
+        min-height: calc(100% - #{$footer-height});
+    }
+
     .app-footer {
         display: block;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
+        height: $footer-height;
     }
 
     // layout style when app-header is hidden
