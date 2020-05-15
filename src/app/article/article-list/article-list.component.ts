@@ -27,6 +27,10 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     constructor(private articleService: ArticleService, private themeService: ThemeService,
                 private route: ActivatedRoute) {}
 
+    get articleRedditMap(): { [key: string]: boolean } {
+        return this.articleService.redditMap;
+    }
+
     ngOnInit(): void {
 
         // set loading flag to try, this will be set to false on first article subscription fufilled
@@ -52,6 +56,11 @@ export class ArticleListComponent implements OnInit, OnDestroy {
 
         this.articleService.getArticles(this.sort, this.subreddit)
             .catch((e) => this.loading = false);
+    }
+
+    toggleArticleReddit(articleId: string): void {
+        const isRead: boolean = this.articleService.redditMap[articleId] || false;
+        this.articleService.redditMap[articleId] = !isRead;
     }
 
     private setArticles(articles: Article[]): void {

@@ -13,10 +13,16 @@ export class ArticleService {
 
     private _articles: BehaviorSubject<Article[]> = new BehaviorSubject<Article[]>([]);
 
+    private _redditMap: { [key: string]: boolean } = {};
+
     constructor(private redditService: RedditService) {}
 
     get articles(): Observable<Article[]> {
         return this._articles.asObservable();
+    }
+
+    get redditMap(): { [key: string]: boolean } {
+        return this._redditMap;
     }
 
     setArticles(articles: Article[]): void {

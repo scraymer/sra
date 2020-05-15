@@ -8,7 +8,7 @@
             <img mat-card-image alt="Under Construction" [src]="constructionImage">
         </mat-card-content>
     </mat-card>
-    <mat-card class="app-article-list-card mat-elevation-z3" [class.app-article-list-card-reddit]="article.reddit" *ngFor="let article of articles">
+    <mat-card class="app-article-list-card mat-elevation-z3" [class.app-article-list-card-reddit]="articleRedditMap[article.id]" *ngFor="let article of articles">
         <mat-card-header>
             <img mat-card-avatar [src]="article.avatar">
             <mat-card-title class="app-card-title-link" [routerLink]="'/' + article.subreddit">
@@ -21,13 +21,19 @@
             <img mat-card-image *ngIf="article.image" [src]="article.image" [alt]="article.title">
         </mat-card-content>
         <mat-card-actions>
-            <a mat-button [color]="article.reddit ? 'basic' : 'primary'" [href]="article.link" target="_blank">OPEN</a>
-            <a mat-button [color]="article.reddit ? 'basic' : 'primary'" [href]="article.comments" target="_blank">COMMENT</a>
+            <a mat-button [color]="articleRedditMap[article.id] ? 'basic' : 'primary'" [href]="article.link" target="_blank"
+                (click)="toggleArticleReddit(article.id)">
+                OPEN
+            </a>
+            <a mat-button [color]="articleRedditMap[article.id] ? 'basic' : 'primary'" [href]="article.comments" target="_blank"
+                (click)="toggleArticleReddit(article.id)">
+                COMMENT
+            </a>
             <span class="fill-remaining-space"></span>
-            <button mat-icon-button [color]="article.reddit ? 'basic' : 'primary'" (click)="article.reddit = !article.reddit">
+            <button mat-icon-button [color]="articleRedditMap[article.id] ? 'basic' : 'primary'" (click)="toggleArticleReddit(article.id)">
                 <mat-icon>visibility</mat-icon>
             </button>
-            <button mat-icon-button [color]="article.reddit ? 'basic' : 'primary'" [cdkCopyToClipboard]="article.link">
+            <button mat-icon-button [color]="articleRedditMap[article.id] ? 'basic' : 'primary'" [cdkCopyToClipboard]="article.link">
                 <mat-icon>share</mat-icon>
             </button>
         </mat-card-actions>
