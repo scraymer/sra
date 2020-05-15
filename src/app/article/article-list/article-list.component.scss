@@ -1,23 +1,6 @@
 @import 'shared/variables';
 
-.app-article-list-card .mat-card-image {
-    margin-bottom: 0;
-}
-
-.app-article-list-card.app-under-contruction {
-    padding-bottom: 0;
-    overflow: hidden;
-
-    .mat-card-image {
-        margin-bottom: -4px;
-        margin-top: 0;
-    }
-}
-
-.app-article-list-card.app-article-list-empty-card {
-    text-align: center;
-}
-
+// app article list container styles
 .app-article-list-container {
     display: flex;
     flex-flow: row wrap;
@@ -25,12 +8,28 @@
     justify-content: space-evenly;
     padding: 8px;
 
+    margin-top: 0;
+    opacity: 1;
+
+    transition-property: margin-top, opacity;
+    transition-duration: $transition-duration;
+    transition-timing-function: $transition-function;
+
     .app-article-list-card {
         flex: 1 1 auto;
         margin: 8px;
 
         display: flex;
         flex-flow: column nowrap;
+
+        box-shadow:
+            0px 3px 3px -2px rgba(0, 0, 0, 0.2),
+            0px 3px 4px 0px rgba(0, 0, 0, 0.14),
+            0px 1px 8px 0px rgba(0, 0, 0, 0.12);
+
+        transition-property: box-shadow, opacity;
+        transition-duration: $transition-duration;
+        transition-timing-function: $transition-function;
 
         .mat-card-header .mat-card-title.app-card-title-link {
             cursor: pointer;
@@ -50,6 +49,8 @@
                 overflow: hidden;
                 object-fit: cover;
                 object-position: top center;
+
+                margin-bottom: 0;
             }
         }
 
@@ -59,25 +60,42 @@
             align-items: center;
             white-space: nowrap;
 
+            a[mat-button],
+            button[mat-icon-button] {
+                transition-property: color;
+                transition-duration: $transition-duration;
+                transition-timing-function: $transition-function;
+            }
+
             .fill-remaining-space {
                 flex: 1 1 auto;
             }
         }
-    }
-}
 
-.app-article-list-container {
-    margin-top: 0;
-    opacity: 1;
+        // additional styles for reddit (aka read) card
+        &.app-article-list-card-reddit {
+            opacity: 0.5;
+            box-shadow:
+                0px 1px 1px -1px rgba(0, 0, 0, 0.2),
+                0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+                0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+        }
 
-    transition-property: margin-top, opacity;
-    transition-duration: $transition-duration;
-    transition-timing-function: $transition-function;
+        // additional styles for empty list card
+        &.app-article-list-card-empty {
+            text-align: center;
+        }
 
-    .app-article-list-card {
-        transition-property: box-shadow;
-        transition-duration: $transition-duration;
-        transition-timing-function: $transition-function;
+        // additional styles for under construction card
+        &.app-article-list-card-under-contruction {
+            padding-bottom: 0;
+            overflow: hidden;
+
+            .mat-card-image {
+                margin-bottom: -4px;
+                margin-top: 0;
+            }
+        }
     }
 
     &.app-article-list-loading {
@@ -93,6 +111,8 @@
     }
 }
 
+// article loading container styles
+// element removed due to issues w/ safari
 .app-article-loading-container {
     padding: 16px;
     overflow: hidden;
@@ -124,7 +144,7 @@
     .app-article-list-container .app-article-list-card {
     
         .mat-card-content {
-            max-height: 800px;
+            max-height: 400px;
         }
     }
 }
