@@ -27,8 +27,8 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     constructor(private articleService: ArticleService, private themeService: ThemeService,
                 private route: ActivatedRoute) {}
 
-    get articleRedditMap(): { [key: string]: boolean } {
-        return this.articleService.redditMap;
+    get redditStatus(): { [key: string]: boolean } {
+        return this.articleService.redditStatus;
     }
 
     ngOnInit(): void {
@@ -58,9 +58,16 @@ export class ArticleListComponent implements OnInit, OnDestroy {
             .catch((e) => this.loading = false);
     }
 
-    toggleArticleReddit(articleId: string): void {
-        const isRead: boolean = this.articleService.redditMap[articleId] || false;
-        this.articleService.redditMap[articleId] = !isRead;
+    toggleRedditStatus(articleId: string, isRead?: boolean): void {
+        if (isRead === undefined) {
+            isRead = !this.redditStatus[articleId];
+        }
+
+        if (isRead) {
+            this.redditStatus[articleId] = true;
+        } else {
+            delete this.redditStatus[articleId];
+        }
     }
 
     private setArticles(articles: Article[]): void {

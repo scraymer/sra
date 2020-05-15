@@ -13,7 +13,7 @@ export class ArticleService {
 
     private _articles: BehaviorSubject<Article[]> = new BehaviorSubject<Article[]>([]);
 
-    private _redditMap: { [key: string]: boolean } = {};
+    private _redditStatus: { [key: string]: boolean } = {};
 
     constructor(private redditService: RedditService) {}
 
@@ -21,8 +21,8 @@ export class ArticleService {
         return this._articles.asObservable();
     }
 
-    get redditMap(): { [key: string]: boolean } {
-        return this._redditMap;
+    get redditStatus(): { [key: string]: boolean } {
+        return this._redditStatus;
     }
 
     setArticles(articles: Article[]): void {
