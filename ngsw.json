@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1596245888344,
+  "timestamp": 1596247823697,
   "index": "/sra/index.html",
   "assetGroups": [
     {
@@ -26,9 +26,12 @@
       "installMode": "lazy",
       "updateMode": "prefetch",
       "urls": [
+        "/sra/assets/icons/icon-120x120.png",
         "/sra/assets/icons/icon-128x128.png",
         "/sra/assets/icons/icon-144x144.png",
         "/sra/assets/icons/icon-152x152.png",
+        "/sra/assets/icons/icon-167x167.png",
+        "/sra/assets/icons/icon-180x180.png",
         "/sra/assets/icons/icon-192x192.png",
         "/sra/assets/icons/icon-384x384.png",
         "/sra/assets/icons/icon-512x512.png",
@@ -44,9 +47,12 @@
   ],
   "dataGroups": [],
   "hashTable": {
+    "/sra/assets/icons/icon-120x120.png": "cd42eb0b40e6da3a8dde71002c54af3a67f8dad8",
     "/sra/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
     "/sra/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
     "/sra/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "/sra/assets/icons/icon-167x167.png": "06255eb534e3db4709d915e9c6a61b5c48dbe082",
+    "/sra/assets/icons/icon-180x180.png": "baff4971be54c8693c5eb0ffc5211abd4a5a1dca",
     "/sra/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
     "/sra/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
     "/sra/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
@@ -57,7 +63,7 @@
     "/sra/assets/under-construction-dark.jpg": "9898aed9e4445d15dfba0cb92be7f94112f367d7",
     "/sra/assets/under-construction-light.jpg": "9deee647f9ee31009f8dd2ac42f1216fb3f7123b",
     "/sra/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/sra/index.html": "768a5d896ffb099f85aea5e7af3f0a19f2f184cc",
+    "/sra/index.html": "5c3f7341bfdde4748813d5c1bdc712553f0c46ff",
     "/sra/main-es2015.26a5b9467ba3e1545f0d.js": "a551d35684a1591f47ccb6e2d555573d4473f25c",
     "/sra/main-es5.26a5b9467ba3e1545f0d.js": "d67f0cbd94e58dcd4029cf81a06d62ca02fef3b2",
     "/sra/manifest.webmanifest": "3a88803238d865506c7fc51cc23f59ace81eacd2",
