@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1596283595828,
+  "timestamp": 1596298046791,
   "index": "/sra/index.html",
   "assetGroups": [
     {
@@ -45,7 +45,36 @@
       "patterns": []
     }
   ],
-  "dataGroups": [],
+  "dataGroups": [
+    {
+      "name": "reddit-data",
+      "patterns": [
+        "https:\\/\\/oauth\\.reddit\\.com\\/best[^/]*[^/]*",
+        "https:\\/\\/oauth\\.reddit\\.com\\/hot[^/]*[^/]*",
+        "https:\\/\\/oauth\\.reddit\\.com\\/new[^/]*[^/]*",
+        "https:\\/\\/oauth\\.reddit\\.com\\/top[^/]*[^/]*",
+        "https:\\/\\/oauth\\.reddit\\.com\\/rising[^/]*[^/]*",
+        "https:\\/\\/oauth\\.reddit\\.com\\/subreddits\\/.*",
+        "https:\\/\\/oauth\\.reddit\\.com\\/r\\/.*"
+      ],
+      "strategy": "performance",
+      "maxSize": 50,
+      "maxAge": 300000,
+      "version": 1
+    },
+    {
+      "name": "reddit-resources",
+      "patterns": [
+        "https:\\/\\/[^/]*\\.thumbs\\.redditmedia\\.com\\/.*",
+        "https:\\/\\/external-preview\\.redd\\.it\\/.*",
+        "https:\\/\\/preview\\.redd\\.it\\/.*"
+      ],
+      "strategy": "performance",
+      "maxSize": 250,
+      "maxAge": 604800000,
+      "version": 1
+    }
+  ],
   "hashTable": {
     "/sra/assets/icons/icon-120x120.png": "cd42eb0b40e6da3a8dde71002c54af3a67f8dad8",
     "/sra/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
