@@ -5,6 +5,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Event, NavigationEnd, Router } from '@angular/router';
 import { NavService } from '@core/layout/nav.service';
 import { ThemeService } from '@core/material/theme.service';
+import { RedditService } from '@core/reddit/reddit.service';
 import { Subscription } from 'rxjs';
 import { AppConstant } from './app.constent';
 
@@ -25,7 +26,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
     private _subscriptions: Subscription;
     private _prevNavOpened: boolean;
 
-    constructor(private navService: NavService, private themeService: ThemeService,
+    constructor(private navService: NavService, private themeService: ThemeService, private redditService: RedditService,
                 private breakpointObserver: BreakpointObserver, private renderer: Renderer2,
                 @Inject(DOCUMENT) private document: Document, private router: Router) {
         this._breakpoints = {};
@@ -64,6 +65,10 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
         this._subscriptions.add(this.themeService.isDark
             .subscribe(isDark => this.setDarkTheme(isDark)));
 
+        // subscribe to user authentication observable and populate side navigation subscriptions
+        this._subscriptions.add(this.redditService.isUserAuth
+            .subscribe(isUserAuth => this.navService.refreshSubscriptions(isUserAuth)));
+
         // set the previous nav open state
         // required before view init so it doesn't open
         this.prevNavOpened = this.navService.prevState;
@@ -71,9 +76,6 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
         // subscribe to route changes, this is used to close
         // the sidenav when in over mode only
         this.router.events.subscribe((e) => this.onRouteEvent(e));
-
-        // populate side navigation subscriptions
-        this.navService.refreshSubscriptions();
     }
 
     ngAfterViewInit(): void {

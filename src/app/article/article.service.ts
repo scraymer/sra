@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { RedditConstent } from '@core/reddit/reddit.contant';
 import { RedditService } from '@core/reddit/reddit.service';
+import { environment } from '@env';
 import { BehaviorSubject, Observable } from 'rxjs';
 import * as Snoowrap from 'snoowrap';
 import { Article } from './article';
@@ -66,7 +66,7 @@ export class ArticleService {
     }
 
     private resolveCommentsUrl(source: Snoowrap.Submission): string {
-        return RedditConstent.REDDIT_URL_PREFIX + source.id;
+        return environment.reddit.urlPrefix + source.id;
     }
 
     private resolveUsername(source: Snoowrap.Submission): string {

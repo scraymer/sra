@@ -6,6 +6,7 @@ import { SharedModule } from '@shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ArticleModule } from './article/article.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { ArticleModule } from './article/article.module';
   imports: [
     CoreModule,
     SharedModule,
+    AuthModule,
     ArticleModule,
     AppRoutingModule
   ],
