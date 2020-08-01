@@ -27,7 +27,7 @@
             0px 3px 4px 0px rgba(0, 0, 0, 0.14),
             0px 1px 8px 0px rgba(0, 0, 0, 0.12);
 
-        transition-property: box-shadow, opacity;
+        transition-property: box-shadow, filter, opacity;
         transition-duration: $transition-duration;
         transition-timing-function: $transition-function;
 
@@ -74,11 +74,12 @@
 
         // additional styles for reddit (aka read) card
         &.app-article-list-card-reddit {
-            opacity: 0.5;
             box-shadow:
                 0px 1px 1px -1px rgba(0, 0, 0, 0.2),
                 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
                 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+            filter: blur(2px);
+            opacity: 0.25;
         }
 
         // additional styles for empty list card
