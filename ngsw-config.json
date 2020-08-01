@@ -25,5 +25,36 @@
         ]
       }
     }
+  ],
+  "dataGroups": [
+    {
+      "name": "reddit-data",
+      "urls": [
+        "https://oauth.reddit.com/best**",
+        "https://oauth.reddit.com/hot**",
+        "https://oauth.reddit.com/new**",
+        "https://oauth.reddit.com/top**",
+        "https://oauth.reddit.com/rising**",
+        "https://oauth.reddit.com/subreddits/**",
+        "https://oauth.reddit.com/r/**"
+      ],
+      "cacheConfig": {
+        "maxSize": 50,
+        "maxAge": "5m",
+        "strategy": "performance"
+      }
+    }, {
+      "name": "reddit-resources",
+      "urls": [
+        "https://*.thumbs.redditmedia.com/**",
+        "https://external-preview.redd.it/**",
+        "https://preview.redd.it/**"
+      ],
+      "cacheConfig": {
+        "maxSize": 250,
+        "maxAge": "7d",
+        "strategy": "performance"
+      }
+    }
   ]
 }
