@@ -3,7 +3,46 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  reddit: {
+
+    /**
+     * Client ID used to authenticate with reddit api.
+     */
+    clientId: 'Mn6imoX40zGd5w',
+
+    /**
+     * Prevent device tracking when authenticated with reddit api.
+     */
+    deviceId: 'DO_NOT_TRACK_THIS_DEVICE',
+
+    /**
+     * Configured redirect url when authenticating with reddit api.
+     */
+    redirectUrl: 'http://localhost:4200/auth/login',
+
+    /**
+     * An array of scopes (permissions on the user's account) to request
+     * on the authentication page.
+     *
+     * A list of possible scopes can be found at 'https://www.reddit.com/api/v1/scopes'
+     * or via snoowrap#getOauthScopeList.
+     */
+    scope: ['mysubreddits', 'read'],
+
+    /**
+     * Reddit URL prefix.
+     */
+    urlPrefix: 'https://reddit.com/',
+
+    /**
+     * App user-agent to use with reddit api.
+     *
+     * TODO: automate version number from package.json
+     * TODO: use browser user-agent as prefix
+     */
+    userAgent: 'browser:ca.craymer.sam.sra:v0.1.0 (by /u/simple-reddit-app)'
+  }
 };
 
 /*
