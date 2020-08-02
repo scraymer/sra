@@ -24,7 +24,7 @@ export class RedditService {
      * "user-less" or "user-specific" authetnication.
      *
      * Checks for "user-specific" authentication code from
-     * previous sessions in localstorage.
+     * previous sessions in storage service.
      */
     initialize = (): Promise<any> => {
         return this.authenticate();
@@ -49,21 +49,42 @@ export class RedditService {
      * Configure reddit service by "user-less" or "user-specific"
      * authentication.
      *
-     * Any authCode parameter provided will be persisted to
-     * localstorage, else any existing will be cleared.
-     *
-     * To "log-off" a user, simply call this request without
-     * authCode paramter.
-     *
      * @param authCode "user-specific" authentication code
      */
     public authenticate(authCode?: string): Promise<Snoowrap> {
 
-        const authReq = authCode
-            ? this.authFromCode(authCode)
-            : this.authFromApp();
+        const refreshToken: string = this.storage.get(RedditConstant.AUTH_REFRESH_KEY);
 
-        return authReq.then((service) => this.handleAuthResponse(service, authCode));
+        let authReq: Promise<Snoowrap>;
+        let isUserSpecific: boolean;
+
+        if (authCode) {
+            authReq = this.authFromCode(authCode);
+            isUserSpecific = true;
+        } else if (refreshToken) {
+            authReq = this.authFromRefresh(refreshToken);
+            isUserSpecific = this.storage.get(RedditConstant.AUTH_IS_USER_SPECIFIC_KEY) || false;
+        } else {
+            authReq = this.authFromApp();
+            isUserSpecific = false;
+        }
+
+        return authReq.then((service) => this.handleAuthResponse(service, isUserSpecific));
+    }
+
+    /**
+     * Revoke current session and re-authenticate a "user-less" service.
+     */
+    public revoke(): Promise<Snoowrap> {
+
+        // remove refresh token and user-specific flag from storage service
+        // prevents them from being used again once revoked
+        this.storage.remove(RedditConstant.AUTH_REFRESH_KEY);
+        this.storage.remove(RedditConstant.AUTH_IS_USER_SPECIFIC_KEY);
+
+        // revoke refresh token and all related access tokens
+        // re-authenticate a "user-less" session once complete
+        return this.service.revokeRefreshToken().then(() => this.authenticate());
     }
 
     /**
@@ -78,6 +99,7 @@ export class RedditService {
             state: this.authState()
         });
     }
+
     /**
      * Validate that the provided state value is equal to the expected value.
      */
@@ -112,6 +134,21 @@ export class RedditService {
     }
 
     /**
+     * Request a "user-less" or "user-specific" authorization token from a preivous
+     * session's refresh token.
+     *
+     * @param refreshToken refresh token
+     */
+    private authFromRefresh(refreshToken: string): Promise<Snoowrap> {
+        return Promise.resolve(new Snoowrap({
+            clientId: environment.reddit.clientId,
+            clientSecret: null,
+            userAgent: environment.reddit.userAgent,
+            refreshToken
+        }));
+    }
+
+    /**
      * Retreives the authentication state value persisted in local storage. If it never has been
      * generated before, it will be generated as a valid GUID value, persisted and returned.
      */
@@ -127,14 +164,21 @@ export class RedditService {
 
     /**
      * Handle authentication repsonses by updating the service object and isUserAuth subject.
+     *
+     * Persist refresh token and isUserSpecific flag to the storage service, will be used to
+     * initialize future sessions.
      */
-    private handleAuthResponse(service: Snoowrap, authCode?: string): Snoowrap {
+    private handleAuthResponse(service: Snoowrap, isUserSpecific: boolean): Snoowrap {
 
         // update the service object before notifying the isUserAuth subject
         this.service = service;
 
+        // persist refresh tokens and user-specific flag to the storage service
+        this.storage.set(RedditConstant.AUTH_REFRESH_KEY, this.service.refreshToken);
+        this.storage.set(RedditConstant.AUTH_IS_USER_SPECIFIC_KEY, isUserSpecific);
+
         // update the user authentication subject based on auth code
-        this._isUserAuth.next(authCode ? true : false);
+        this._isUserAuth.next(isUserSpecific);
 
         // return service to allow chaining
         return this.service;
