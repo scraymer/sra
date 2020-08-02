@@ -39,9 +39,8 @@ export const environment = {
      * App user-agent to use with reddit api.
      *
      * TODO: automate version number from package.json
-     * TODO: use browser user-agent as prefix
      */
-    userAgent: 'browser:ca.craymer.sam.sra:v0.1.0 (by /u/simple-reddit-app)'
+    userAgent: navigator.userAgent + ':ca.craymer.sam.sra:v0.1.0 (by /u/simple-reddit-app)'
   }
 };
 
