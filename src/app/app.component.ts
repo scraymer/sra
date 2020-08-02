@@ -65,9 +65,9 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
         this._subscriptions.add(this.themeService.isDark
             .subscribe(isDark => this.setDarkTheme(isDark)));
 
-        // subscribe to user authentication observable and populate side navigation subscriptions
+        // subscribe to user authentication observable and populate side navigation
         this._subscriptions.add(this.redditService.isUserAuth
-            .subscribe(isUserAuth => this.navService.refreshSubscriptions(isUserAuth)));
+            .subscribe(isUserAuth => this.navService.setUserState(isUserAuth)));
 
         // set the previous nav open state
         // required before view init so it doesn't open

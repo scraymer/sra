@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import * as Snoowrap from 'snoowrap';
 import { NavItemCategory, NavItemLink } from './nav';
 import { NavConstant } from './nav.constant';
-import { DEFAULT_NAV_ITEMS } from './nav.default';
+import { DEFAULT_LOGIN_ITEM, DEFAULT_LOGOUT_ITEM, DEFAULT_NAV_ITEMS } from './nav.default';
 
 /**
  * Service used to control the application navigation state such as opening,
@@ -67,30 +67,12 @@ export class NavService {
     }
 
     /**
-     * Wrapper method to get logged in user's subscriptions, else use
-     * default subreddits and result in items list.
+     * Wrapper method to get logged in user's subscriptions and set flag, else use
+     * default subreddits in items list.
      */
-    refreshSubscriptions(isUser: boolean = false): void {
+    setUserState(isUser: boolean = false): void {
         this.getSubscriptions(isUser)
-            .then((r) => this.setSubscriptions(r));
-    }
-
-    /**
-     * Set the navigation item links for the subscription category.
-     */
-    setSubscriptions(subreddits: Array<NavItemLink>): void {
-
-        const curr: Array<NavItemCategory|NavItemLink> = this._items.getValue();
-
-        // only replace root level category sub items where its label is 'Subscription'
-        const result = curr.map((i) => {
-            if (i.type === 'category' && i.label === 'Subscriptions') {
-                i.subItems = subreddits;
-            }
-            return i;
-        });
-
-        this._items.next(result);
+            .then((r) => this.setUserItems(r, isUser));
     }
 
     /**
@@ -146,6 +128,34 @@ export class NavService {
         const isOpen = result === 'open' ? true : false;
         this.storage.set(NavConstant.IS_OPEN_KEY, isOpen);
         return result;
+    }
+
+    /**
+     * Set the navigation item links for the subscription category and authentication item.
+     */
+    private setUserItems(subreddits: Array<NavItemLink>, isUser: boolean): void {
+
+        const curr: Array<NavItemCategory|NavItemLink> = this._items.getValue();
+
+        const result = curr.map((i) => {
+
+            if (i.type === 'category' && i.label === 'Subscriptions') {
+                // only replace root level category sub items where its label is 'Subscription'
+                i.subItems = subreddits;
+
+            } else if (isUser && i.type === DEFAULT_LOGIN_ITEM.type && i.label === DEFAULT_LOGIN_ITEM.label) {
+                // replace login with logout item if user IS authenticated
+                i = DEFAULT_LOGOUT_ITEM;
+
+            } else if (!isUser && i.type === DEFAULT_LOGOUT_ITEM.type && i.label === DEFAULT_LOGOUT_ITEM.label) {
+                // replace logout with login item if user IS NOT authenticated
+                i = DEFAULT_LOGIN_ITEM;
+            }
+
+            return i;
+        });
+
+        this._items.next(result);
     }
 
     /**

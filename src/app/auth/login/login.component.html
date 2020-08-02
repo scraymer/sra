@@ -1,1 +1,2 @@
-<p>authenticating...</p>
+<h1 *ngIf="!authFailedMsg">Redirecting to reddit...</h1>
+<h1 *ngIf="authFailedMsg">{{authFailedMsg}}</h1>
