@@ -1,4 +1,4 @@
-<button class="app-list-category" mat-list-item mat-subheader (click)="toggle()" [class.expanded]="expandedChange | async">
+<button class="app-list-category" mat-list-item (click)="toggle()" [class.expanded]="expandedChange | async">
     <mat-icon *ngIf="icon" matListIcon>{{ icon }}</mat-icon>
     <span class="app-list-category-label">{{ label }}</span>
     <mat-icon class="app-list-category-icon">keyboard_arrow_down</mat-icon>
