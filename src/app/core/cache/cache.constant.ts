@@ -11,7 +11,7 @@ export class CacheConstant {
         {
             name: `ngsw:${CacheConstant.baseUriPath()}:${RedditConstant.USERSPECIFIC_CACHE_VERSION}`
                 + `:data:dynamic:${RedditConstant.USERSPECIFIC_CACHE_NAME}:cache`,
-            urls: new RegExp(`(?:${RedditConstant.USERSPECIFIC_CACHE_URLS.map((e) => e.source).join(')|(?:')})`)
+            urls: new RegExp(`(?:${RedditConstant.USERSPECIFIC_CACHE_URLS.map((exp) => exp.source).join(')|(?:')})`)
         }
     ];
 
