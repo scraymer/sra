@@ -1,4 +1,4 @@
-import { environment } from '@env';
+import { RedditConstant } from '@core/reddit/reddit.constant';
 import { CacheSelector } from './cache';
 
 export class CacheConstant {
@@ -9,8 +9,9 @@ export class CacheConstant {
      */
     static readonly USER_SEPCIFIC_CACHES: Array<CacheSelector> = [
         {
-            name: `ngsw:${CacheConstant.baseUriPath()}:1:data:dynamic:reddit-data:cache`,
-            urls: new RegExp(`${environment.reddit.apiUrlPrefix}(?:best|hot|new|top|rising)\\?.*`, 'i')
+            name: `ngsw:${CacheConstant.baseUriPath()}:${RedditConstant.USERSPECIFIC_CACHE_VERSION}`
+                + `:data:dynamic:${RedditConstant.USERSPECIFIC_CACHE_NAME}:cache`,
+            urls: new RegExp(`(?:${RedditConstant.USERSPECIFIC_CACHE_URLS.join(')|(?:')})`)
         }
     ];
 
