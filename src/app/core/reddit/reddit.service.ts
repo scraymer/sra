@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
+import { CacheService } from '@core/cache/cache.service';
 import { environment } from '@env';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -17,7 +18,7 @@ export class RedditService {
      */
     private _isUserAuth: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-    constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {}
+    constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, private cache: CacheService) {}
 
     /**
      * Initialize the reddit service by authenticating via
@@ -69,7 +70,8 @@ export class RedditService {
             isUserSpecific = false;
         }
 
-        return authReq.then((service) => this.handleAuthResponse(service, isUserSpecific));
+        return authReq.then(async (service) =>
+            await this.handleAuthResponse(service, isUserSpecific));
     }
 
     /**
@@ -168,14 +170,20 @@ export class RedditService {
      * Persist refresh token and isUserSpecific flag to the storage service, will be used to
      * initialize future sessions.
      */
-    private handleAuthResponse(service: Snoowrap, isUserSpecific: boolean): Snoowrap {
+    private async handleAuthResponse(response: Snoowrap, isUserSpecific: boolean): Promise<Snoowrap> {
 
-        // update the service object before notifying the isUserAuth subject
-        this.service = service;
+        // remove user-specific cached entries, wait for completion so they aren't
+        // used before resolving authentication response (skip on initialization)
+        if (this.service) {
+            await this.cache.clearUserSpecific();
+        }
 
         // persist refresh tokens and user-specific flag to the storage service
-        this.storage.set(RedditConstant.AUTH_REFRESH_KEY, this.service.refreshToken);
+        this.storage.set(RedditConstant.AUTH_REFRESH_KEY, response.refreshToken);
         this.storage.set(RedditConstant.AUTH_IS_USER_SPECIFIC_KEY, isUserSpecific);
+
+        // update the service object before notifying the isUserAuth subject
+        this.service = response;
 
         // update the user authentication subject based on auth code
         this._isUserAuth.next(isUserSpecific);

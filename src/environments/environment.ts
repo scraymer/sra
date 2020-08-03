@@ -36,6 +36,11 @@ export const environment = {
     urlPrefix: 'https://reddit.com/',
 
     /**
+     * Reddit API URL prefix.
+     */
+    apiUrlPrefix: 'https://oauth.reddit.com/',
+
+    /**
      * App user-agent to use with reddit api.
      *
      * TODO: automate version number from package.json

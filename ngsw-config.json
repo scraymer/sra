@@ -29,6 +29,12 @@
   "dataGroups": [
     {
       "name": "reddit-data",
+      "version": 1,
+      "cacheConfig": {
+        "maxSize": 150,
+        "maxAge": "5m",
+        "strategy": "performance"
+      },
       "urls": [
         "https://oauth.reddit.com/best**",
         "https://oauth.reddit.com/hot**",
@@ -37,24 +43,20 @@
         "https://oauth.reddit.com/rising**",
         "https://oauth.reddit.com/subreddits/**",
         "https://oauth.reddit.com/r/**"
-      ],
-      "cacheConfig": {
-        "maxSize": 50,
-        "maxAge": "5m",
-        "strategy": "performance"
-      }
+      ]
     }, {
       "name": "reddit-resources",
+      "version": 1,
+      "cacheConfig": {
+        "maxSize": 250,
+        "maxAge": "1d",
+        "strategy": "performance"
+      },
       "urls": [
         "https://*.thumbs.redditmedia.com/**",
         "https://external-preview.redd.it/**",
         "https://preview.redd.it/**"
-      ],
-      "cacheConfig": {
-        "maxSize": 250,
-        "maxAge": "7d",
-        "strategy": "performance"
-      }
+      ]
     }
   ]
 }
