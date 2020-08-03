@@ -44,6 +44,10 @@
             display: flex;
             flex-flow: column nowrap;
 
+            .app-card-content-title {
+                overflow-wrap: break-word;
+            }
+
             .mat-card-image {
                 flex: 1 1 auto;
                 overflow: hidden;
