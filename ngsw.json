@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1596339770234,
+  "timestamp": 1596429031235,
   "index": "/sra/index.html",
   "assetGroups": [
     {
@@ -10,8 +10,8 @@
       "urls": [
         "/sra/favicon.ico",
         "/sra/index.html",
-        "/sra/main-es2015.21a7198776cd671c83a8.js",
-        "/sra/main-es5.21a7198776cd671c83a8.js",
+        "/sra/main-es2015.6626d4d5f0c253a7ca9e.js",
+        "/sra/main-es5.6626d4d5f0c253a7ca9e.js",
         "/sra/manifest.webmanifest",
         "/sra/polyfills-es2015.8444ba9f138f3f3bebe1.js",
         "/sra/polyfills-es5.ce01882cb2497b576c71.js",
@@ -58,7 +58,7 @@
         "https:\\/\\/oauth\\.reddit\\.com\\/r\\/.*"
       ],
       "strategy": "performance",
-      "maxSize": 50,
+      "maxSize": 150,
       "maxAge": 300000,
       "version": 1
     },
@@ -71,7 +71,7 @@
       ],
       "strategy": "performance",
       "maxSize": 250,
-      "maxAge": 604800000,
+      "maxAge": 86400000,
       "version": 1
     }
   ],
@@ -92,10 +92,10 @@
     "/sra/assets/under-construction-dark.jpg": "9898aed9e4445d15dfba0cb92be7f94112f367d7",
     "/sra/assets/under-construction-light.jpg": "9deee647f9ee31009f8dd2ac42f1216fb3f7123b",
     "/sra/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/sra/index.html": "3d70df8b506bb4d29b1d0c24ff4e67aca83fbe49",
-    "/sra/main-es2015.21a7198776cd671c83a8.js": "a7888970266819370557a55932e5408235195638",
-    "/sra/main-es5.21a7198776cd671c83a8.js": "26de7a8743404c9a5a48d0a7466707909a401a0e",
-    "/sra/manifest.webmanifest": "3a88803238d865506c7fc51cc23f59ace81eacd2",
+    "/sra/index.html": "9935720f541f1e6bd9ce784ded1c460dd2292892",
+    "/sra/main-es2015.6626d4d5f0c253a7ca9e.js": "b7d9dcfa6715e344c0c8debceb9f8e58c106aeff",
+    "/sra/main-es5.6626d4d5f0c253a7ca9e.js": "d9ef4ffcf7dc54e5b964039177603c05c0d5c6c2",
+    "/sra/manifest.webmanifest": "a6b72643b5100163bc32266c2dcca90d03e50d2a",
     "/sra/polyfills-es2015.8444ba9f138f3f3bebe1.js": "9c93e0e0336fa3d4614932c559d39614d83c0734",
     "/sra/polyfills-es5.ce01882cb2497b576c71.js": "1d05d9cb542cc219099eb2b38e905b5d6e0913ec",
     "/sra/runtime-es2015.0811dcefd377500b5b1a.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",

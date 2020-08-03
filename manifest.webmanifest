@@ -1,6 +1,6 @@
 {
-  "name": "sra",
-  "short_name": "sra",
+  "name": "Simple Reddit App",
+  "short_name": "SRA",
   "theme_color": "#f57c00",
   "background_color": "#fafafa",
   "display": "standalone",
