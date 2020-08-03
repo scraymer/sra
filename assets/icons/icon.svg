@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   inkscape:export-ydpi="15.719298"
+   inkscape:export-xdpi="15.719298"
+   inkscape:export-filename="C:\Users\sam\Development\ca\craymer\sam\sra\src\favicon.png"
+   sodipodi:docname="icon.svg"
+   id="svg22"
+   xml:space="preserve"
+   style="enable-background:new 0 0 341.8 341.8;"
+   viewBox="0 0 341.8 341.8"
+   y="0px"
+   x="0px"
+   version="1.1"><metadata
+   id="metadata28"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+   id="defs26"><clipPath
+     id="clipPath971"
+     clipPathUnits="userSpaceOnUse"><text
+       transform="scale(0.99841044,1.0015921)"
+       id="text975"
+       y="248.82535"
+       x="90.518799"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:206.216px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.2719"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:206.216px;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:3.2719"
+         sodipodi:role="line"
+         y="248.82535"
+         x="90.518799"
+         id="tspan973">R</tspan></text></clipPath></defs><sodipodi:namedview
+   inkscape:current-layer="Artwork"
+   inkscape:window-maximized="1"
+   inkscape:window-y="-8"
+   inkscape:window-x="-8"
+   inkscape:cy="192.86644"
+   inkscape:cx="175.0477"
+   inkscape:zoom="3.5169151"
+   inkscape:snap-text-baseline="false"
+   showgrid="false"
+   id="namedview24"
+   inkscape:window-height="1017"
+   inkscape:window-width="1920"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0"
+   guidetolerance="10"
+   gridtolerance="10"
+   objecttolerance="10"
+   borderopacity="1"
+   bordercolor="#666666"
+   pagecolor="#ffffff" />
+<style
+   id="style2"
+   type="text/css">
+	.st0{fill:#F57C00;}
+	.st1{fill:#FFFFFF;}
+	.st2{display:none;}
+	.st3{display:inline;fill:none;stroke:#D8D8D8;stroke-width:0.5;stroke-miterlimit:10;}
+</style>
+<g
+   style="display:inline"
+   id="Artwork">
+	<g
+   style="display:inline"
+   id="g8">
+		<circle
+   id="circle4"
+   r="85.5"
+   cy="170.89999"
+   cx="170.89999"
+   class="st0" />
+		
+	</g>
+<g
+   clip-path="url(#clipPath971)"
+   transform="matrix(1.0011675,0,0,1.0011675,-0.19952993,-0.19952993)"
+   id="g951"
+   style="display:inline">
+		<circle
+   style="display:inline;fill:#ffffff;stroke-width:1.00174"
+   class="st0"
+   cx="170.89999"
+   cy="170.89999"
+   r="85.650002"
+   id="circle949" />
+		
+	</g></g>
+<g
+   class="st2"
+   id="Spacing_Guide">
+	<rect
+   y="0"
+   x="0"
+   id="rect11"
+   height="85.400002"
+   width="85.400002"
+   class="st3" />
+	<rect
+   y="0"
+   x="0"
+   id="rect13"
+   height="85.400002"
+   width="341.79999"
+   class="st3" />
+	<rect
+   x="0"
+   id="rect15"
+   height="85.400002"
+   width="341.79999"
+   class="st3"
+   y="256.29999" />
+	<rect
+   y="0"
+   x="0"
+   id="rect17"
+   height="341.79999"
+   width="85.400002"
+   class="st3" />
+	<rect
+   y="0"
+   id="rect19"
+   height="341.79999"
+   width="85.400002"
+   class="st3"
+   x="256.39999" />
+</g>
+</svg>
