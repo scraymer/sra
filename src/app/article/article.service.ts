@@ -36,7 +36,7 @@ export class ArticleService {
     }
 
     setLastAccessDates(lastAccessDates: { [key: string]: Date }): void {
-        this.storage.set(ArticleConstant.LAST_ACCESS_DATES_KEY, lastAccessDates);
+        this.persistLastAccessDates(lastAccessDates);
         this.lastAccessDates$.next(lastAccessDates);
     }
 
@@ -78,6 +78,19 @@ export class ArticleService {
         }
 
         this.setLastAccessDates(lastAccessDates);
+    }
+
+    private persistLastAccessDates(lastAccessDates: { [key: string]: Date }): void {
+
+        // remove any last access dates that are expired
+        Object.keys(lastAccessDates).forEach((k) => {
+            if (lastAccessDates[k] === null || this.resolveEolDate(lastAccessDates[k]) < new Date()) {
+                delete lastAccessDates[k];
+            }
+        });
+
+        // persist to storage service
+        this.storage.set(ArticleConstant.LAST_ACCESS_DATES_KEY, lastAccessDates);
     }
 
     private toArticle(source: Snoowrap.Submission): Article {
@@ -127,5 +140,11 @@ export class ArticleService {
         }
 
         return result;
+    }
+
+    private resolveEolDate(accessDate: Date): Date {
+        const eolDate = new Date(accessDate);
+        eolDate.setDate(eolDate.getDate() + ArticleConstant.LAST_ACCESS_DATES_TTL);
+        return eolDate;
     }
 }

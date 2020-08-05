@@ -61,11 +61,6 @@ export class ArticleListComponent implements OnInit, OnDestroy {
         this.articleService.toggleLastAccessDate(articleId, isRead);
     }
 
-    private setRedditStatus(lastAccessDate: { [key: string]: Date }): void {
-        this.redditStatus = Object.keys(lastAccessDate)
-            .reduce((r, k) => (r[k] = lastAccessDate[k] !== null, r), {});
-    }
-
     private setArticles(articles: Article[]): void {
         this.articles = articles;
 
@@ -77,5 +72,10 @@ export class ArticleListComponent implements OnInit, OnDestroy {
         this.constructionImage = isDarkTheme
             ? ArticleListConstent.IMG_CONSTRUCTION.DARK
             : ArticleListConstent.IMG_CONSTRUCTION.LIGHT;
+    }
+
+    private setRedditStatus(lastAccessDate: { [key: string]: Date }): void {
+        this.redditStatus = Object.keys(lastAccessDate)
+            .reduce((r, k) => (r[k] = lastAccessDate[k] !== null, r), {});
     }
 }
