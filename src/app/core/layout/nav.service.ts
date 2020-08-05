@@ -20,7 +20,7 @@ export class NavService {
     /**
      * The list of navigation items displayed in the sidenav.
      */
-    private _items: BehaviorSubject<Array<NavItemCategory|NavItemLink>> = new BehaviorSubject<Array<NavItemCategory|NavItemLink>>([]);
+    private items$: BehaviorSubject<Array<NavItemCategory|NavItemLink>> = new BehaviorSubject<Array<NavItemCategory|NavItemLink>>([]);
 
     /**
      * The material side nav component configured from the shared layout nav
@@ -42,7 +42,7 @@ export class NavService {
      * Get the list of side navigation items.
      */
     get items(): Observable<Array<NavItemCategory|NavItemLink>> {
-        return this._items.asObservable();
+        return this.items$.asObservable();
     }
 
     /**
@@ -63,7 +63,7 @@ export class NavService {
      * Set the navigation items, they will be sorted automatically.
      */
     setItems(items: Array<NavItemCategory|NavItemLink>): void {
-        this._items.next(items);
+        this.items$.next(items);
     }
 
     /**
@@ -135,7 +135,7 @@ export class NavService {
      */
     private setUserItems(subreddits: Array<NavItemLink>, isUser: boolean): void {
 
-        const curr: Array<NavItemCategory|NavItemLink> = this._items.getValue();
+        const curr: Array<NavItemCategory|NavItemLink> = this.items$.getValue();
 
         const result = curr.map((i) => {
 
@@ -155,7 +155,7 @@ export class NavService {
             return i;
         });
 
-        this._items.next(result);
+        this.items$.next(result);
     }
 
     /**

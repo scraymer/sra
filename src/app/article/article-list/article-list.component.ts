@@ -24,12 +24,10 @@ export class ArticleListComponent implements OnInit, OnDestroy {
 
     loading: boolean;
 
+    redditStatus: { [key: string]: boolean } = {};
+
     constructor(private articleService: ArticleService, private themeService: ThemeService,
                 private route: ActivatedRoute) {}
-
-    get redditStatus(): { [key: string]: boolean } {
-        return this.articleService.redditStatus;
-    }
 
     ngOnInit(): void {
 
@@ -40,6 +38,7 @@ export class ArticleListComponent implements OnInit, OnDestroy {
         this.subscriptions.add(this.themeService.isDark.subscribe(t => this.setConstructionImage(t)));
         this.subscriptions.add(this.articleService.articles.subscribe(t => this.setArticles(t)));
         this.subscriptions.add(this.route.paramMap.subscribe(t => this.getArticles(t)));
+        this.subscriptions.add(this.articleService.lastAccessDates.subscribe(t => this.setRedditStatus(t)));
     }
 
     ngOnDestroy(): void {
@@ -59,15 +58,12 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     }
 
     toggleRedditStatus(articleId: string, isRead?: boolean): void {
-        if (isRead === undefined) {
-            isRead = !this.redditStatus[articleId];
-        }
+        this.articleService.toggleLastAccessDate(articleId, isRead);
+    }
 
-        if (isRead) {
-            this.redditStatus[articleId] = true;
-        } else {
-            delete this.redditStatus[articleId];
-        }
+    private setRedditStatus(lastAccessDate: { [key: string]: Date }): void {
+        this.redditStatus = Object.keys(lastAccessDate)
+            .reduce((r, k) => (r[k] = lastAccessDate[k] !== null, r), {});
     }
 
     private setArticles(articles: Article[]): void {

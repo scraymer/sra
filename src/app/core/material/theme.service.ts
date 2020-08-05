@@ -15,12 +15,12 @@ export class ThemeService {
     /**
      * Source subject for managing the dark theme flag state.
      */
-    private isDarkSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    private isDark$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     /**
      * Observable for the is dark theme flag.
      */
-    isDark: Observable<boolean> = this.isDarkSubject.asObservable();
+    isDark: Observable<boolean> = this.isDark$.asObservable();
 
     /**
      * Check storage service for previous session theme properties on initialization.
@@ -38,7 +38,7 @@ export class ThemeService {
      * @param isDark true for dark theme, else light theme
      */
     setDark(isDark: boolean): void {
-        this.isDarkSubject.next(isDark);
+        this.isDark$.next(isDark);
         this.storage.set(ThemeConstant.IS_DARK_THEME_KEY, isDark);
     }
 }

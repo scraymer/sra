@@ -16,7 +16,7 @@ export class RedditService {
     /**
      * Source subject for managing the "user-specific" authentication state.
      */
-    private _isUserAuth: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    private isUserAuth$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, private cache: CacheService) {}
 
@@ -43,7 +43,7 @@ export class RedditService {
      * Get the state of the "user-specific" authentication.
      */
     get isUserAuth(): Observable<boolean> {
-        return this._isUserAuth.asObservable();
+        return this.isUserAuth$.asObservable();
     }
 
     /**
@@ -186,7 +186,7 @@ export class RedditService {
         this.service = response;
 
         // update the user authentication subject based on auth code
-        this._isUserAuth.next(isUserSpecific);
+        this.isUserAuth$.next(isUserSpecific);
 
         // return service to allow chaining
         return this.service;

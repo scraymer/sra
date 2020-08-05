@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { RedditService } from '@core/reddit/reddit.service';
 import { environment } from '@env';
+import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import * as Snoowrap from 'snoowrap';
 import { Article } from './article';
+import { ArticleConstant } from './article.constant';
 import { ArticleSort } from './article.enum';
 
 @Injectable({
@@ -11,22 +13,31 @@ import { ArticleSort } from './article.enum';
 })
 export class ArticleService {
 
-    private _articles: BehaviorSubject<Article[]> = new BehaviorSubject<Article[]>([]);
+    private articles$: BehaviorSubject<Article[]> = new BehaviorSubject<Article[]>([]);
 
-    private _redditStatus: { [key: string]: boolean } = {};
+    private lastAccessDates$: BehaviorSubject<{ [key: string]: Date }> = new BehaviorSubject<{ [key: string]: Date }>({});
 
-    constructor(private redditService: RedditService) {}
-
-    get articles(): Observable<Article[]> {
-        return this._articles.asObservable();
+    constructor(private redditService: RedditService, @Inject(LOCAL_STORAGE) private storage: StorageService) {
+        if (this.storage.has(ArticleConstant.LAST_ACCESS_DATES_KEY)) {
+            this.setLastAccessDates(this.storage.get(ArticleConstant.LAST_ACCESS_DATES_KEY));
+        }
     }
 
-    get redditStatus(): { [key: string]: boolean } {
-        return this._redditStatus;
+    get articles(): Observable<Article[]> {
+        return this.articles$.asObservable();
+    }
+
+    get lastAccessDates(): Observable<{ [key: string]: Date }> {
+        return this.lastAccessDates$.asObservable();
     }
 
     setArticles(articles: Article[]): void {
-        this._articles.next(articles);
+        this.articles$.next(articles);
+    }
+
+    setLastAccessDates(lastAccessDates: { [key: string]: Date }): void {
+        this.storage.set(ArticleConstant.LAST_ACCESS_DATES_KEY, lastAccessDates);
+        this.lastAccessDates$.next(lastAccessDates);
     }
 
     async getArticles(sort: ArticleSort = ArticleSort.Best, subreddit?: string): Promise<Article[]> {
@@ -50,6 +61,23 @@ export class ArticleService {
 
         this.setArticles(result);
         return result;
+    }
+
+    toggleLastAccessDate(articleId: string, isAccessed?: boolean): void {
+
+        const lastAccessDates = this.lastAccessDates$.getValue();
+
+        if (isAccessed === undefined) {
+            isAccessed = !lastAccessDates[articleId];
+        }
+
+        if (isAccessed) {
+            lastAccessDates[articleId] = new Date();
+        } else {
+            delete lastAccessDates[articleId];
+        }
+
+        this.setLastAccessDates(lastAccessDates);
     }
 
     private toArticle(source: Snoowrap.Submission): Article {
