@@ -4,7 +4,8 @@ import { environment } from '@env';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import * as Snoowrap from 'snoowrap';
-import { Article } from './article';
+import { ListingOptions } from 'snoowrap/dist/objects';
+import { Article, ArticleOptions, ArticlePagination } from './article';
 import { ArticleConstant } from './article.constant';
 import { ArticleSort } from './article.enum';
 
@@ -40,20 +41,25 @@ export class ArticleService {
         this.lastAccessDates$.next(lastAccessDates);
     }
 
-    async getArticles(sort: ArticleSort = ArticleSort.Best, subreddit?: string): Promise<Article[]> {
+    async getArticles(options: ArticleOptions = { sort: ArticleSort.Best }): Promise<Article[]> {
 
         let req: Promise<Snoowrap.Listing<Snoowrap.Submission>>;
 
-        if (sort === ArticleSort.Best) {
-            req = this.redditService.run.getBest();
-        } else if (sort === ArticleSort.New) {
-            req = this.redditService.run.getNew(subreddit || undefined);
-        } else if (sort === ArticleSort.Top) {
-            req = this.redditService.run.getTop(subreddit || undefined);
-        } else if (sort === ArticleSort.Rising) {
-            req = this.redditService.run.getRising(subreddit || undefined);
+        if (options.sort === ArticleSort.Best && options.subreddit === undefined) {
+            req = this.redditService.run.getBest(
+                this.resolveListingOptions(options.pagination));
+        } else if (options.sort === ArticleSort.New) {
+            req = this.redditService.run.getNew(options.subreddit || undefined,
+                this.resolveListingOptions(options.pagination));
+        } else if (options.sort === ArticleSort.Top) {
+            req = this.redditService.run.getTop(options.subreddit || undefined,
+                this.resolveListingOptions(options.pagination));
+        } else if (options.sort === ArticleSort.Rising) {
+            req = this.redditService.run.getRising(options.subreddit || undefined,
+                this.resolveListingOptions(options.pagination));
         } else {
-            req = this.redditService.run.getHot(subreddit || undefined);
+            req = this.redditService.run.getHot(options.subreddit || undefined,
+                this.resolveListingOptions(options.pagination));
         }
 
         const result = (await req)
@@ -96,6 +102,7 @@ export class ArticleService {
     private toArticle(source: Snoowrap.Submission): Article {
         return {
             id: source.id,
+            name: source.name,
             title: source.title,
             subreddit: source.subreddit_name_prefixed,
             username: this.resolveUsername(source),
@@ -147,4 +154,21 @@ export class ArticleService {
         eolDate.setDate(eolDate.getDate() + ArticleConstant.LAST_ACCESS_DATES_TTL);
         return eolDate;
     }
-}
+
+    private resolveListingOptions(pagination?: ArticlePagination): ListingOptions {
+
+        const options: ListingOptions = {
+            limit: ArticleConstant.DEFAULT_LISTING_LIMIT
+        };
+
+        if (pagination && pagination.after) {
+            options.after = pagination.after;
+            options.count = options.limit * (pagination.page - 1);
+        } else if (pagination && pagination.before) {
+            options.before = pagination.before;
+            options.count = options.limit * (pagination.page - 1);
+        }
+
+        return options;
+    }
+ }

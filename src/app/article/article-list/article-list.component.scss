@@ -116,6 +116,36 @@
     }
 }
 
+.app-article-pagination-container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-content: flex-start;
+    padding: 8px;
+
+    margin-top: 0;
+    opacity: 1;
+
+    transition-property: margin-top, opacity;
+    transition-duration: $transition-duration;
+    transition-timing-function: $transition-function;
+
+    &.app-article-list-loading {
+        margin-top: -16px;
+        opacity: 0;
+
+    }
+
+    button:first-of-type {
+        margin-left: 8px;
+    }
+
+    button:last-of-type {
+        margin-right: 8px;
+    }
+}
+
 // article loading container styles
 // element removed due to issues w/ safari
 .app-article-loading-container {

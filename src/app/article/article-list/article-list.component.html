@@ -40,6 +40,16 @@
     </mat-card>
     <mat-card class="app-article-list-card app-article-list-card-empty mat-primary"
         *ngIf="loading === false && articles.length === 0">
-        <p>No results found for {{ subreddit ? 'r/' + subreddit : 'the front page' }}.</p>
+        <p>No results found for {{ articleOptions && articleOptions.subreddit ? 'r/' + articleOptions.subreddit : 'the front page' }}.</p>
     </mat-card>
+</div>
+<div class="app-article-pagination-container" [class.app-article-list-loading]="loading">
+    <button mat-button color="primary" [disabled]="articleOptions.pagination.page === 1"
+        [routerLink]="resolveRouteLink('before', articles[0])">
+        PREVIOUS
+    </button>
+    <button mat-button color="primary" [disabled]="articles.length < 25"
+        [routerLink]="resolveRouteLink('after', articles[articles.length - 1])">
+        NEXT
+    </button>
 </div>
