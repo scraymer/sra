@@ -1,28 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavService } from '@core/layout/nav.service';
 import { ThemeService } from '@core/material/theme.service';
-import { Observable } from 'rxjs';
+import { environment } from '@env';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
-  isDarkTheme: Observable<boolean>;
+    private subscriptions: Subscription = new Subscription();
 
-  constructor(private navService: NavService, private themeService: ThemeService) { }
+    appTitle: string;
 
-  ngOnInit(): void {
-    this.isDarkTheme = this.themeService.isDark;
-  }
+    isDarkTheme: boolean;
 
-  toggleDarkTheme(checked: boolean): void {
-    this.themeService.setDark(checked);
-  }
+    constructor(private navService: NavService, private themeService: ThemeService) { }
 
-  toggleNav(): void {
-    this.navService.toggle();
-  }
+    ngOnInit(): void {
+        this.appTitle = environment.app.title;
+        this.subscriptions.add(this.themeService.isDark.subscribe(t => this.isDarkTheme = t));
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.unsubscribe();
+    }
+
+    toggleDarkTheme(checked: boolean): void {
+        this.themeService.setDark(!this.isDarkTheme);
+    }
+
+    toggleNav(): void {
+        this.navService.toggle();
+    }
 }

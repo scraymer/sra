@@ -1,5 +1,12 @@
+import { name, title, version } from 'package.json';
+
 export const environment = {
   production: true,
+  app: {
+    name: `${name}`,
+    title: `${title}`,
+    version: `v${version}`,
+  },
   reddit: {
     clientId: '84X6ASXxXjAt3Q',
     deviceId: 'DO_NOT_TRACK_THIS_DEVICE',

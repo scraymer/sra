@@ -1,5 +1,6 @@
 {
   "name": "sra",
+  "title": "Simple Reddit App",
   "version": "0.1.0",
   "scripts": {
     "ng": "ng",

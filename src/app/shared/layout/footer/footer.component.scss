@@ -1,4 +1,8 @@
 .app-footer-wrapper {
     padding: 16px;
     text-align: center;
+
+    .app-footer-details {
+        text-transform: uppercase;
+    }
 }
