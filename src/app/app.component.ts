@@ -2,10 +2,12 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Title } from '@angular/platform-browser';
 import { Event, NavigationEnd, Router } from '@angular/router';
 import { NavService } from '@core/layout/nav.service';
 import { ThemeService } from '@core/material/theme.service';
 import { RedditService } from '@core/reddit/reddit.service';
+import { environment } from '@env';
 import { Subscription } from 'rxjs';
 import { AppConstant } from './app.constent';
 
@@ -27,7 +29,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
     private _prevNavOpened: boolean;
 
     constructor(private navService: NavService, private themeService: ThemeService, private redditService: RedditService,
-                private breakpointObserver: BreakpointObserver, private renderer: Renderer2,
+                private breakpointObserver: BreakpointObserver, private renderer: Renderer2, private titleService: Title,
                 @Inject(DOCUMENT) private document: Document, private router: Router) {
         this._breakpoints = {};
         this._subscriptions = new Subscription();
@@ -76,6 +78,9 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
         // subscribe to route changes, this is used to close
         // the sidenav when in over mode only
         this.router.events.subscribe((e) => this.onRouteEvent(e));
+
+        // define application title from environment configuration
+        this.titleService.setTitle(environment.app.title);
     }
 
     ngAfterViewInit(): void {
