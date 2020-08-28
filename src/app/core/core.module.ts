@@ -6,10 +6,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '@env';
 import { StorageServiceModule } from 'ngx-webstorage-service';
+import { AnalyticsModule } from './analytics/analytics.module';
 
 @NgModule({
   declarations: [],
   imports: [
+    AnalyticsModule,
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -18,6 +20,7 @@ import { StorageServiceModule } from 'ngx-webstorage-service';
     StorageServiceModule
   ],
   exports: [
+    AnalyticsModule,
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,

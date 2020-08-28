@@ -4,6 +4,7 @@ import { AfterViewInit, Component, Inject, OnDestroy, OnInit, Renderer2, ViewChi
 import { MatSidenav } from '@angular/material/sidenav';
 import { Title } from '@angular/platform-browser';
 import { Event, NavigationEnd, Router } from '@angular/router';
+import { CoreService } from '@core/core.service';
 import { NavService } from '@core/layout/nav.service';
 import { ThemeService } from '@core/material/theme.service';
 import { RedditService } from '@core/reddit/reddit.service';
@@ -30,7 +31,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
     constructor(private navService: NavService, private themeService: ThemeService, private redditService: RedditService,
                 private breakpointObserver: BreakpointObserver, private renderer: Renderer2, private titleService: Title,
-                @Inject(DOCUMENT) private document: Document, private router: Router) {
+                @Inject(DOCUMENT) private document: Document, private router: Router, private coreService: CoreService) {
         this._breakpoints = {};
         this._subscriptions = new Subscription();
     }
@@ -57,6 +58,9 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     ngOnInit(): void {
+
+        // initialize core application services
+        this.coreService.initialize();
 
         // subscribe to header and nav breakpoint observables
         this._subscriptions.add(this.breakpointObserver.observe([

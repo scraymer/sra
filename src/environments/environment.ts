@@ -5,55 +5,89 @@
 import { name, title, version } from 'package.json';
 
 export const environment = {
-  app: {
-    name: `${name}`,
-    title: `${title}`,
-    version: `v${version}-SNAPSHOT`,
-  },
-  production: false,
-  reddit: {
 
     /**
-     * Client ID used to authenticate with reddit api.
+     * Application specific details used to populate interface fields.
      */
-    clientId: 'Mn6imoX40zGd5w',
+    app: {
+        name: `${name}`,
+        title: `${title}`,
+        version: `v${version}-SNAPSHOT`,
+    },
 
     /**
-     * Prevent device tracking when authenticated with reddit api.
+     * Configuration options for the analytic service(s).
      */
-    deviceId: 'DO_NOT_TRACK_THIS_DEVICE',
+    analytics: {
+
+        /**
+         * Boolean flag to disable analytics services, set to true for production only.
+         */
+        enabled: false,
+
+        /**
+         * Main configuration for mixpanel analytic provider.
+         */
+        mixpanel: {
+
+            /**
+             * Mixpanel project token to push event into.
+             */
+            token: '435b94a4d4bc80932b0d64612b78438b'
+        }
+    },
 
     /**
-     * Configured redirect url when authenticating with reddit api.
+     * Boolean flag to indicate when the build targets production or not.
      */
-    redirectUrl: 'http://localhost:4200/auth/login',
+    production: false,
 
     /**
-     * An array of scopes (permissions on the user's account) to request
-     * on the authentication page.
-     *
-     * A list of possible scopes can be found at 'https://www.reddit.com/api/v1/scopes'
-     * or via snoowrap#getOauthScopeList.
+     * Configuration options for the reddit API.
      */
-    scope: ['mysubreddits', 'read'],
+    reddit: {
 
-    /**
-     * Reddit URL prefix.
-     */
-    urlPrefix: 'https://reddit.com/',
+        /**
+         * Client ID used to authenticate with reddit api.
+         */
+        clientId: 'Mn6imoX40zGd5w',
 
-    /**
-     * Reddit API URL prefix.
-     */
-    apiUrlPrefix: 'https://oauth.reddit.com/',
+        /**
+         * Prevent device tracking when authenticated with reddit api.
+         */
+        deviceId: 'DO_NOT_TRACK_THIS_DEVICE',
 
-    /**
-     * App user-agent to use with reddit api.
-     *
-     * TODO: automate version number from package.json
-     */
-    userAgent: navigator.userAgent + ':ca.craymer.sam.sra:v0.1.0 (by /u/simple-reddit-app)'
-  }
+        /**
+         * Configured redirect url when authenticating with reddit api.
+         */
+        redirectUrl: 'http://localhost:4200/auth/login',
+
+        /**
+         * An array of scopes (permissions on the user's account) to request
+         * on the authentication page.
+         *
+         * A list of possible scopes can be found at 'https://www.reddit.com/api/v1/scopes'
+         * or via snoowrap#getOauthScopeList.
+         */
+        scope: ['mysubreddits', 'read'],
+
+        /**
+         * Reddit URL prefix.
+         */
+        urlPrefix: 'https://reddit.com/',
+
+        /**
+         * Reddit API URL prefix.
+         */
+        apiUrlPrefix: 'https://oauth.reddit.com/',
+
+        /**
+         * App user-agent to use with reddit api.
+         *
+         * TODO: automate version number from package.json
+         */
+        userAgent: navigator.userAgent + ':ca.craymer.sam.sra:v0.1.0 (by /u/simple-reddit-app)'
+    }
 };
 
 /*
