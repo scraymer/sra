@@ -41,7 +41,9 @@ export class AnalyticsService {
     }
 
     /**
-     * Define, initialize and start mixpanel analytics tracking.
+     * Define, initialize and start mixpanel analytics tracking. If the user's nav/window DoNotTrack
+     * settings are true, no tracking will be done to respect user's privacy. This is built into
+     * mixpanel-browser library by default.
      */
     private startMixpanelTracking(): void {
 
@@ -54,5 +56,10 @@ export class AnalyticsService {
 
         // statrt tracking using angulartics2 mixpanelprovider
         this.mixpanelAnalytics.startTracking();
+
+        // log warning that mixpanel analytics has been disabled due to user's preferences
+        if (globalThis.mixpanel.has_opted_out_tracking()) {
+            console.warn('Mixpanel analytics disabled, user has opted out of tracking.');
+        }
     }
 }
