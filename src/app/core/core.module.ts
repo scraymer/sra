@@ -7,6 +7,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '@env';
 import { StorageServiceModule } from 'ngx-webstorage-service';
 import { AnalyticsModule } from './analytics/analytics.module';
+import { MonitoringModule } from './monitoring/monitoring.module';
 
 @NgModule({
   declarations: [],
@@ -16,6 +17,7 @@ import { AnalyticsModule } from './analytics/analytics.module';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MonitoringModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     StorageServiceModule
   ],
@@ -24,6 +26,7 @@ import { AnalyticsModule } from './analytics/analytics.module';
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
+    MonitoringModule,
     ServiceWorkerModule,
     StorageServiceModule
   ]

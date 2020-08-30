@@ -31,9 +31,45 @@ export const environment = {
         mixpanel: {
 
             /**
-             * Mixpanel project token to push event into.
+             * Mixpanel project token to push events to.
              */
             token: '435b94a4d4bc80932b0d64612b78438b'
+        }
+    },
+
+    /**
+     * Configuration options for the monitoring services used to diagnose, fix, and optimize the
+     * performance of the application.
+     */
+    monitoring: {
+
+        /**
+         * Boolean flag to disable monitoring services, set to true for production only.
+         */
+        enabled: true,
+
+        /**
+         * Main configuration for sentry application monitorying client.
+         */
+        sentry: {
+
+            /**
+             * Sentry project dns (Data Source Name) to push events to.
+             */
+            dns: 'https://44c78ddfbccb4698b2ba8df5396d0c15@o440991.ingest.sentry.io/5410733',
+
+            /**
+             * Define which outgoing requests the `sentry-trace` header will be attached to.
+             */
+            tracingOrigins: ['localhost'],
+
+            /**
+             * Sample rate to determine trace sampling, range between 0.0 and 1.0.
+             *
+             * 0.0 = 0% chance of a given trace being sent (send no traces)
+             * 1.0 = 100% chance of a given trace being sent (send all traces)
+             */
+            tracesSampleRate: 1.0
         }
     },
 
