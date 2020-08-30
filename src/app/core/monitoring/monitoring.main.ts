@@ -20,6 +20,7 @@ export function enableMonitoring(): void {
                 routingInstrumentation,
             }),
         ],
+        release: `${environment.app.name}@${environment.app.version}`,
         tracesSampleRate,
     });
 }

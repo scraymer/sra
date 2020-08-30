@@ -10,8 +10,20 @@ export const environment = {
      * Application specific details used to populate interface fields.
      */
     app: {
+
+        /**
+         * Application name, equivalent to npm package name.
+         */
         name: `${name}`,
+
+        /**
+         * Application human readable title.
+         */
         title: `${title}`,
+
+        /**
+         * Application version, equivalent to npm package version.
+         */
         version: `v${version}-SNAPSHOT`,
     },
 
