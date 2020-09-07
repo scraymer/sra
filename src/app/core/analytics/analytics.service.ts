@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { RedditService } from '@core/reddit/reddit.service';
 import { environment } from '@env';
 import { Angulartics2 } from 'angulartics2';
 import { Angulartics2Mixpanel } from 'angulartics2/mixpanel';
@@ -19,7 +20,9 @@ export class AnalyticsService {
      */
     private options: AnalyticOptions;
 
-    constructor(private analyticService: Angulartics2, private mixpanelAnalytics: Angulartics2Mixpanel) {
+    constructor(private analyticService: Angulartics2, private mixpanelAnalytics: Angulartics2Mixpanel,
+                private redditService: RedditService) {
+
         this.options = environment.analytics;
         this.analyticService.settings.developerMode = !this.options.enabled;
     }
@@ -53,6 +56,9 @@ export class AnalyticsService {
         // configure mixpanel service initial configuration directly and set as globel value, required
         // as angulartics doesn't provided this functionality
         globalThis.mixpanel.init(this.options.mixpanel.token);
+
+        // only track identity by their randomly generated authentication state to respect privacy
+        globalThis.mixpanel.identify(this.redditService.authState);
 
         // statrt tracking using angulartics2 mixpanelprovider
         this.mixpanelAnalytics.startTracking();

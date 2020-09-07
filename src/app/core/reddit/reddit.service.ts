@@ -40,6 +40,23 @@ export class RedditService {
     }
 
     /**
+     * Retreives the authentication state value persisted in local storage. If it never has been
+     * generated before, it will be generated as a valid GUID value, persisted and returned.
+     */
+    get authState(): string {
+
+        if (!this.storage.has(RedditConstant.AUTH_STATE_KEY)) {
+            this.storage.set(RedditConstant.AUTH_STATE_KEY, '10000000-1000-4000-8000-100000000000'
+                .replace(/[018]/g, (c: any) => (
+                    // tslint:disable-next-line:no-bitwise
+                    c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4
+                ).toString(16)));
+        }
+
+        return this.storage.get(RedditConstant.AUTH_STATE_KEY);
+    }
+
+    /**
      * Get the state of the "user-specific" authentication.
      */
     get isUserAuth(): Observable<boolean> {
@@ -98,7 +115,7 @@ export class RedditService {
             clientId: environment.reddit.clientId,
             redirectUri: environment.reddit.redirectUrl,
             scope: environment.reddit.scope,
-            state: this.authState()
+            state: this.authState
         });
     }
 
@@ -106,7 +123,7 @@ export class RedditService {
      * Validate that the provided state value is equal to the expected value.
      */
     public isValidAuthState(authState: string): boolean {
-        return authState === this.authState();
+        return authState === this.authState;
     }
 
     /**
@@ -148,23 +165,6 @@ export class RedditService {
             userAgent: environment.reddit.userAgent,
             refreshToken
         }));
-    }
-
-    /**
-     * Retreives the authentication state value persisted in local storage. If it never has been
-     * generated before, it will be generated as a valid GUID value, persisted and returned.
-     */
-    private authState(): string {
-
-        if (!this.storage.has(RedditConstant.AUTH_STATE_KEY)) {
-            this.storage.set(RedditConstant.AUTH_STATE_KEY, '10000000-1000-4000-8000-100000000000'
-                .replace(/[018]/g, (c: any) => (
-                    // tslint:disable-next-line:no-bitwise
-                    c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4
-                ).toString(16)));
-        }
-
-        return this.storage.get(RedditConstant.AUTH_STATE_KEY);
     }
 
     /**
