@@ -1,7 +1,7 @@
 <div class="app-container" appScrollEvent="app-header-hidden" [ngClass]="{'app-sidenav-over': sidenav.mode === 'over' && sidenav.opened}"
         appScrollEventDelayDown="50" appScrollEventDelayUp="600" [appScrollEventPadding]="breakpoints.headerLg ? 64 : 56">
     <app-header class="app-header"></app-header>
-    <mat-sidenav-container class="app-container" [hasBackdrop]="breakpoints.navModeSide ? false : true">
+    <mat-sidenav-container class="app-sidenav-container" [hasBackdrop]="breakpoints.navModeSide ? false : true">
         <mat-sidenav #sidenav class="app-sidenav" [mode]="breakpoints.navModeSide ? 'side' : 'over'" fixedInViewport="true"
                 [fixedTopGap]="breakpoints.headerLg ? 64 : 56" [disableClose]="sidenav.mode === 'side'" opened="{{ breakpoints.navModeSide && prevNavOpened }}">
             <app-nav class="app-nav"></app-nav>

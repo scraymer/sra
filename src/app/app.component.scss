@@ -6,13 +6,18 @@
     min-height: 100%;
     max-width: 100%;
 
+    // force use of partent element for positioning
+    .app-sidenav-container {
+        position: static;
+    }
+
     .app-header {
         display: block;
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
-        z-index: 2;
+        z-index: 4;
         transition: transform $transition-duration $transition-function;
     }
 
