@@ -33,7 +33,7 @@ jobs:
       - name: Define Environment Variables
         run: |
           echo "PKG_VERSION=$(node -p 'require('\''./package.json'\'').version')" >> $GITHUB_ENV
-          echo "PKG_VERSION_SUFFIX=$(date +'%Y%m%d.%H%M')" >> $GITHUB_ENV
+          echo "PKG_VERSION_SUFFIX=$(date +'%Y%m%d.%-H%M')" >> $GITHUB_ENV
 
       - name: Test and Build
         run: |
