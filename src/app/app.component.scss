@@ -6,6 +6,9 @@
     min-height: 100%;
     max-width: 100%;
 
+    // force use of this element for positioning
+    position: relative;
+
     // force use of partent element for positioning
     .app-sidenav-container {
         position: static;
