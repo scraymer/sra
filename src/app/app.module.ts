@@ -1,7 +1,5 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CoreModule } from '@core/core.module';
-import { onAppInit as RedditServiceRun } from '@core/reddit/reddit.run';
-import { RedditService } from '@core/reddit/reddit.service';
 import { SharedModule } from '@shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,15 +16,6 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
     ArticleModule,
     AppRoutingModule
-  ],
-  providers: [
-    RedditService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: RedditServiceRun,
-      deps: [RedditService],
-      multi: true
-    }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
+import { WindowService } from '@core/window/window.service';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ThemeConstant } from './theme.constant';
@@ -15,20 +16,23 @@ export class ThemeService {
     /**
      * Source subject for managing the dark theme flag state.
      */
-    private isDark$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    private isDark$: BehaviorSubject<boolean>;
 
     /**
      * Observable for the is dark theme flag.
      */
-    isDark: Observable<boolean> = this.isDark$.asObservable();
+    isDark: Observable<boolean>;
 
     /**
      * Check storage service for previous session theme properties on initialization.
      *
      * @param storage storage to persiste theme properties
      */
-    constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
-        if (this.isPreferDark()) { this.setDark(true); }
+    constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, private window: WindowService) {
+
+        // define default isDark subject from user's default and set observable
+        this.isDark$ = new BehaviorSubject<boolean>(this.isDarkDefault());
+        this.isDark = this.isDark$.asObservable();
     }
 
     /**
@@ -42,12 +46,10 @@ export class ThemeService {
     }
 
     /**
-     * Return true if the isDark storage setting is true OR isDark storage setting is undefined and
-     * the media query prefers dark mode.
+     * Determines default isDark value from local storage or window media query.
      */
-    private isPreferDark(): boolean {
+    private isDarkDefault(): boolean {
         const isDark: boolean = this.storage.get(ThemeConstant.IS_DARK_THEME_KEY);
-        return isDark === true || (isDark === undefined && window.matchMedia
-            && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        return isDark !== undefined ? isDark : this.window.isPreferDark();
     }
 }
