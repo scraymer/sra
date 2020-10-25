@@ -33,15 +33,15 @@ export class IsInViewportDirective implements AfterViewInit, OnDestroy {
 
     constructor(
         @Inject(PLATFORM_ID) private platformId: Object, // tslint:disable-line
-        private elementRef: ElementRef, private inViewport: InViewportService, private renderer: Renderer2
+        private element: ElementRef<Element>, private inViewportService: InViewportService, private renderer: Renderer2
     ) {}
 
     public ngAfterViewInit(): void {
         if (isPlatformBrowser(this.platformId)) {
-            this.inViewport.register(this.elementRef.nativeElement, this.config);
+            this.inViewportService.register(this.element.nativeElement, this.config);
             this.subscription.add(
-                this.inViewport.trigger$
-                    .pipe(filter((entry: IntersectionObserverEntry) => entry && entry.target === this.elementRef.nativeElement))
+                this.inViewportService.trigger$
+                    .pipe(filter((entry: IntersectionObserverEntry) => entry && entry.target === this.element.nativeElement))
                     .subscribe((entry: IntersectionObserverEntry) => this.action(entry, false))
             );
         } else {
@@ -52,7 +52,7 @@ export class IsInViewportDirective implements AfterViewInit, OnDestroy {
     public ngOnDestroy(): void {
         this.subscription.unsubscribe();
         if (isPlatformBrowser(this.platformId)) {
-            this.inViewport.unregister(this.elementRef.nativeElement, this.config);
+            this.inViewportService.unregister(this.element.nativeElement, this.config);
         }
     }
 
@@ -63,7 +63,7 @@ export class IsInViewportDirective implements AfterViewInit, OnDestroy {
             return this.config.partial ? partiallyVisible : completelyVisible;
         };
         const visible = force || !entry || isVisible();
-        return { target: this.elementRef.nativeElement, visible };
+        return { target: this.element.nativeElement, visible };
     }
 
     private action(entry: IntersectionObserverEntry, force: boolean): void {

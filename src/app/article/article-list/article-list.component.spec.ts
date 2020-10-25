@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ThemeService } from '@core/material/theme.service';
@@ -13,11 +14,13 @@ describe('ArticleListComponent', () => {
     let articleService: ArticleService;
     let themeService: ThemeService;
     let route: ActivatedRoute;
+    let snackbarService: MatSnackBar;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                RouterTestingModule
+                RouterTestingModule,
+                MatSnackBarModule
             ],
             declarations: [
                 ArticleListComponent,
@@ -29,6 +32,7 @@ describe('ArticleListComponent', () => {
         articleService = TestBed.inject(ArticleService);
         themeService = TestBed.inject(ThemeService);
         route = TestBed.inject(ActivatedRoute);
+        snackbarService = TestBed.inject(MatSnackBar);
 
         // mock method used on init
         spyOn(articleService, 'getArticles').and.returnValue(Promise.resolve([]));
