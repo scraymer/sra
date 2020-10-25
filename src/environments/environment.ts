@@ -58,7 +58,7 @@ export const environment = {
         /**
          * Boolean flag to disable monitoring services, set to true for production only.
          */
-        enabled: true,
+        enabled: false,
 
         /**
          * Main configuration for sentry application monitorying client.

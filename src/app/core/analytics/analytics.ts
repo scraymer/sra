@@ -6,3 +6,8 @@ export interface AnalyticOptions {
 export interface AnalyticMixpanelOptions {
     token: string;
 }
+
+export interface AnalyticEvent {
+    action: string;
+    properties: any;
+}

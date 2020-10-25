@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ThemeService } from '@core/material/theme.service';
 import { Subscription } from 'rxjs';
@@ -27,7 +28,7 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     redditStatus: { [key: string]: boolean } = {};
 
     constructor(private articleService: ArticleService, private themeService: ThemeService,
-                private route: ActivatedRoute) {}
+                private route: ActivatedRoute, private snackBarService: MatSnackBar) {}
 
     ngOnInit(): void {
 
@@ -59,6 +60,16 @@ export class ArticleListComponent implements OnInit, OnDestroy {
                 console.error(`Could not retreive articles with params=[${params}].`, e);
                 this.loading = false;
             });
+    }
+
+    onShare(article: Article, isCopied: boolean) {
+
+        const action = isCopied ? null : 'Dismiss';
+        const message = isCopied ? 'Copied to clipboard.' : `${article.link}`;
+        const options = Object.assign({}, ArticleListConstent.SHARE_LINK_SNACKBAR_OPTIONS,
+            isCopied ? {} : { duration: null });
+
+        this.snackBarService.open(message, action, options);
     }
 
     resolveRouteLink(dir: 'after' | 'before', article: Article): string {

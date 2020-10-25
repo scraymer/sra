@@ -8,7 +8,8 @@
             <img mat-card-image alt="Under Construction" [src]="constructionImage">
         </mat-card-content>
     </mat-card>
-    <mat-card class="app-article-list-card mat-elevation-z3" [class.app-article-list-card-reddit]="redditStatus[article.id]" *ngFor="let article of articles">
+    <mat-card appIsInViewport class="app-article-list-card mat-elevation-z3"
+        [class.app-article-list-card-reddit]="redditStatus[article.id]" *ngFor="let article of articles">
         <mat-card-header>
             <img mat-card-avatar [src]="article.avatar">
             <mat-card-title class="app-card-title-link" [routerLink]="'/' + article.subreddit">
@@ -22,18 +23,21 @@
         </mat-card-content>
         <mat-card-actions>
             <a mat-button [color]="redditStatus[article.id] ? 'basic' : 'primary'" [href]="article.link" target="_blank"
-                (click)="toggleRedditStatus(article.id, true)">
+                (click)="toggleRedditStatus(article.id, true)" appAnalyticsAction="Article Viewed" [appAnalyticsActionProperties]="article">
                 OPEN
             </a>
             <a mat-button [color]="redditStatus[article.id] ? 'basic' : 'primary'" [href]="article.comments" target="_blank"
-                (click)="toggleRedditStatus(article.id, true)">
+                (click)="toggleRedditStatus(article.id, true)" appAnalyticsAction="Article Comments" [appAnalyticsActionProperties]="article">
                 COMMENT
             </a>
             <span class="fill-remaining-space"></span>
-            <button mat-icon-button [color]="redditStatus[article.id] ? 'basic' : 'primary'" (click)="toggleRedditStatus(article.id)">
+            <button mat-icon-button [color]="redditStatus[article.id] ? 'basic' : 'primary'" (click)="toggleRedditStatus(article.id)"
+                appAnalyticsAction="Article Read" [appAnalyticsActionProperties]="article">
                 <mat-icon>visibility</mat-icon>
             </button>
-            <button mat-icon-button [color]="redditStatus[article.id] ? 'basic' : 'primary'" [cdkCopyToClipboard]="article.link">
+            <button mat-icon-button [color]="redditStatus[article.id] ? 'basic' : 'primary'"
+                [cdkCopyToClipboard]="article.link" (cdkCopyToClipboardCopied)="onShare(article, $event)"
+                appAnalyticsAction="Article Shared" [appAnalyticsActionProperties]="article">
                 <mat-icon>share</mat-icon>
             </button>
         </mat-card-actions>

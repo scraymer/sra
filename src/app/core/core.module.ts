@@ -10,6 +10,7 @@ import { AnalyticsModule } from './analytics/analytics.module';
 import { MonitoringModule } from './monitoring/monitoring.module';
 import { onAppInit as RedditServiceRun } from './reddit/reddit.run';
 import { RedditService } from './reddit/reddit.service';
+import { ViewportModule } from './viewport/viewport.module';
 
 @NgModule({
   declarations: [],
@@ -21,7 +22,8 @@ import { RedditService } from './reddit/reddit.service';
     HttpClientModule,
     MonitoringModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    StorageServiceModule
+    StorageServiceModule,
+    ViewportModule
   ],
   exports: [
     AnalyticsModule,
@@ -30,7 +32,8 @@ import { RedditService } from './reddit/reddit.service';
     BrowserAnimationsModule,
     MonitoringModule,
     ServiceWorkerModule,
-    StorageServiceModule
+    StorageServiceModule,
+    ViewportModule
   ],
   providers: [
     RedditService,
