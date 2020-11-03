@@ -2,13 +2,12 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Title } from '@angular/platform-browser';
-import { Event, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router';
 import { CoreService } from '@core/core.service';
 import { NavService } from '@core/layout/nav.service';
+import { TitleService } from '@core/layout/title.service';
 import { ThemeService } from '@core/material/theme.service';
 import { RedditService } from '@core/reddit/reddit.service';
-import { environment } from '@env';
 import { Subscription } from 'rxjs';
 import { AppConstant } from './app.constent';
 
@@ -30,7 +29,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
     private _prevNavOpened: boolean;
 
     constructor(private navService: NavService, private themeService: ThemeService, private redditService: RedditService,
-                private breakpointObserver: BreakpointObserver, private renderer: Renderer2, private titleService: Title,
+                private breakpointObserver: BreakpointObserver, private renderer: Renderer2, private titleService: TitleService,
                 @Inject(DOCUMENT) private document: Document, private router: Router, private coreService: CoreService) {
         this._breakpoints = {};
         this._subscriptions = new Subscription();
@@ -82,9 +81,6 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
         // subscribe to route changes, this is used to close
         // the sidenav when in over mode only
         this.router.events.subscribe((e) => this.onRouteEvent(e));
-
-        // define application title from environment configuration
-        this.titleService.setTitle(environment.app.title);
     }
 
     ngAfterViewInit(): void {
@@ -110,6 +106,38 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
         if (event instanceof NavigationEnd && this.sidenav.mode === 'over') {
             this.navService.close();
         }
+
+        // update header and document title on route change
+        if (event instanceof NavigationEnd) {
+            const routeTitle: string = this.resolveRouteTitle(this.router.routerState.root);
+            this.titleService.setTitle(routeTitle);
+        }
+    }
+
+    /**
+     * Add or remove the scrollbar functionality if not in nav side view.
+     *
+     * @param isDisabled true to disable scrolling
+     */
+    private isScrollDisabled(isDisabled: boolean): void {
+        if (isDisabled && !this.breakpoints.navModeSide) {
+            this.renderer.setStyle(this.document.body, 'overflow', 'hidden');
+        } else {
+            this.renderer.removeStyle(this.document.body, 'overflow');
+        }
+    }
+
+    /**
+     * Resolve the active routes title from the route data or child route data.
+     */
+    private resolveRouteTitle(route: ActivatedRoute): string {
+        let title: string = null;
+        if (route && route.snapshot.data && route.snapshot.data.title) {
+            title = route.snapshot.data.title;
+        } else if (route && route.firstChild) {
+            title = this.resolveRouteTitle(route.firstChild);
+        }
+        return title;
     }
 
     /**
@@ -143,19 +171,6 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
             this.renderer.addClass(this.document.body, AppConstant.THEME.DARK_CLASS);
         } else {
             this.renderer.removeClass(this.document.body, AppConstant.THEME.DARK_CLASS);
-        }
-    }
-
-    /**
-     * Add or remove the scrollbar functionality if not in nav side view.
-     *
-     * @param isDisabled true to disable scrolling
-     */
-    private isScrollDisabled(isDisabled: boolean): void {
-        if (isDisabled && !this.breakpoints.navModeSide) {
-            this.renderer.setStyle(this.document.body, 'overflow', 'hidden');
-        } else {
-            this.renderer.removeStyle(this.document.body, 'overflow');
         }
     }
 }

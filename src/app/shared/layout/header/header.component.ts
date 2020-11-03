@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavService } from '@core/layout/nav.service';
+import { TitleService } from '@core/layout/title.service';
 import { ThemeService } from '@core/material/theme.service';
-import { environment } from '@env';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -17,11 +17,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     isDarkTheme: boolean;
 
-    constructor(private navService: NavService, private themeService: ThemeService) { }
+    constructor(private navService: NavService, private themeService: ThemeService,
+                private titleService: TitleService) { }
 
     ngOnInit(): void {
-        this.appTitle = environment.app.title;
-        this.subscriptions.add(this.themeService.isDark.subscribe(t => this.isDarkTheme = t));
+        this.subscriptions.add(this.themeService.isDark.subscribe((t) => this.onThemeChange(t)));
+        this.subscriptions.add(this.titleService.title.subscribe((t) => this.onTitleChange(t)));
     }
 
     ngOnDestroy(): void {
@@ -34,5 +35,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     toggleNav(): void {
         this.navService.toggle();
+    }
+
+    private onThemeChange(isDark: boolean): void {
+        this.isDarkTheme = isDark;
+    }
+
+    private onTitleChange(title: string): void {
+        this.appTitle = title;
     }
 }

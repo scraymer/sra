@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { TitleService } from '@core/layout/title.service';
 import { ThemeService } from '@core/material/theme.service';
 import { Subscription } from 'rxjs';
 import { Article, ArticleOptions, ArticlePagination } from '../article';
@@ -28,17 +29,13 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     redditStatus: { [key: string]: boolean } = {};
 
     constructor(private articleService: ArticleService, private themeService: ThemeService,
-                private route: ActivatedRoute, private snackBarService: MatSnackBar) {}
+                private route: ActivatedRoute, private snackBarService: MatSnackBar,
+                private titleService: TitleService) {}
 
     ngOnInit(): void {
-
-        // set loading flag to try, this will be set to false on first article subscription fufilled
-        this.loading = true;
-
-        // subscribe to theme, article, and route param changes
         this.subscriptions.add(this.themeService.isDark.subscribe(t => this.setConstructionImage(t)));
         this.subscriptions.add(this.articleService.articles.subscribe(t => this.setArticles(t)));
-        this.subscriptions.add(this.route.paramMap.subscribe(t => this.getArticles(t)));
+        this.subscriptions.add(this.route.paramMap.subscribe(t => this.onRouteParamChange(t)));
         this.subscriptions.add(this.articleService.lastAccessDates.subscribe(t => this.setRedditStatus(t)));
     }
 
@@ -46,18 +43,15 @@ export class ArticleListComponent implements OnInit, OnDestroy {
         this.subscriptions.unsubscribe();
     }
 
-    getArticles(params: ParamMap): void {
+    getArticles(articleOptions: ArticleOptions): void {
 
         // set loading flag to true, this will be set to false on first article subscription fufilled
         this.loading = true;
 
-        // parse article options from request parameters
-        this.articleOptions = this.parseArticleOptions(params);
-
         // request articles and on error, disable loading flag if error is caught
-        this.articleService.getArticles(this.articleOptions)
+        this.articleService.getArticles(articleOptions)
             .catch((e) => {
-                console.error(`Could not retreive articles with params=[${params}].`, e);
+                console.error(`Could not retreive articles with articleOptions=[${articleOptions}].`, e);
                 this.loading = false;
             });
     }
@@ -91,6 +85,19 @@ export class ArticleListComponent implements OnInit, OnDestroy {
 
     toggleRedditStatus(articleId: string, isRead?: boolean): void {
         this.articleService.toggleLastAccessDate(articleId, isRead);
+    }
+
+    private onRouteParamChange(params: ParamMap): void {
+
+        // parse article options from request parameters
+        this.articleOptions = this.parseArticleOptions(params);
+
+        // set application title based on subreddit
+        this.titleService.setTitle(this.articleOptions.subreddit
+            ? `r/${this.articleOptions.subreddit}` : 'Front Page');
+
+        // refresh articles list with article options
+        this.getArticles(this.articleOptions);
     }
 
     private parseArticleOptions(params: ParamMap): ArticleOptions {
