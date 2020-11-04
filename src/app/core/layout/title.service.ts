@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { environment } from '@env';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { TitleConstant } from './title.constant';
 
 /**
  * Service used to control the application title state and value.
@@ -37,12 +38,15 @@ export class TitleService implements OnDestroy {
     }
 
     /**
-     * Set the next application title value, use `null` for none.
+     * Set the next application title value. Use `null` for no/blank title or
+     * TitleConstant.NO_ROUTE_TITLE to ignore the route change.
      *
      * @param title title value
      */
     setTitle(title: string): void {
-        this.title$.next(title || environment.app.title);
+        if (title !== TitleConstant.NO_ROUTE_TITLE) {
+            this.title$.next(title || environment.app.title);
+        }
     }
 
     /**
