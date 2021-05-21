@@ -7,8 +7,8 @@
             <app-nav class="app-nav"></app-nav>
             <app-footer class="app-footer"></app-footer>
         </mat-sidenav>
-        <mat-sidenav-content class="app-sidenav-content" [ngStyle]="{'padding-top.px': breakpoints.headerLg ? 64 : 56}">
-            <router-outlet></router-outlet>
+        <mat-sidenav-content class="app-sidenav-content" [ngStyle]="{'padding-top.px': breakpoints.headerLg ? 64 : 56}"><!--[@routeAnimations]="transitionName"-->
+            <router-outlet></router-outlet><!--#routerOutlet="outlet" (activate)="onRouteActivate(routerOutlet)"-->
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>

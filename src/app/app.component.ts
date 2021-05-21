@@ -2,12 +2,13 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Event, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { CoreService } from '@core/core.service';
 import { NavService } from '@core/layout/nav.service';
 import { TitleService } from '@core/layout/title.service';
 import { ThemeService } from '@core/material/theme.service';
 import { RedditService } from '@core/reddit/reddit.service';
+import { routerAnimations } from '@shared/layout/route-animations.constant';
 import { Subscription } from 'rxjs';
 import { AppConstant } from './app.constent';
 
@@ -19,19 +20,24 @@ interface Breakpoints {
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: [ './app.component.scss' ],
+    animations: [ routerAnimations ]
 })
 export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
     private _breakpoints: Breakpoints;
+    private _prevNavOpened: boolean;
+    private _prevRoutePath: string;
     private _sidenav: MatSidenav;
     private _subscriptions: Subscription;
-    private _prevNavOpened: boolean;
+
+    transitionName: string;
 
     constructor(private navService: NavService, private themeService: ThemeService, private redditService: RedditService,
                 private breakpointObserver: BreakpointObserver, private renderer: Renderer2, private titleService: TitleService,
                 @Inject(DOCUMENT) private document: Document, private router: Router, private coreService: CoreService) {
         this._breakpoints = {};
+        this._prevRoutePath = '';
         this._subscriptions = new Subscription();
     }
 
@@ -111,6 +117,34 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
         if (event instanceof NavigationEnd) {
             const routeTitle: string = this.resolveRouteTitle(this.router.routerState.root);
             this.titleService.setTitle(routeTitle);
+        }
+    }
+
+    onRouteActivate(routerOutlet: RouterOutlet): void {
+
+        if (routerOutlet.isActivated) {
+
+            const path = routerOutlet.activatedRoute.snapshot.pathFromRoot
+                .map((v) => v.url.map((segment) => segment.toString()).join('/'))
+                .join('/');
+
+            const isSame = this._prevRoutePath === path;
+            const isBackward = this._prevRoutePath.startsWith(path);
+            const isForward = path.startsWith(this._prevRoutePath);
+
+            if (isSame) {
+                this.transitionName = 'none';
+            } else if (isBackward && isForward) {
+                this.transitionName = 'initial';
+            } else if (isBackward) {
+                this.transitionName = 'backward';
+            } else if (isForward) {
+                this.transitionName = 'forward';
+            } else {
+                this.transitionName = 'section';
+            }
+
+            this._prevRoutePath = path;
         }
     }
 
