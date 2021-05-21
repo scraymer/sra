@@ -36,8 +36,7 @@
                 <mat-icon>visibility</mat-icon>
             </button>
             <button mat-icon-button [color]="redditStatus[article.id] ? 'basic' : 'primary'"
-                [cdkCopyToClipboard]="article.link" (cdkCopyToClipboardCopied)="onShare(article, $event)"
-                appAnalyticsAction="Article Shared" [appAnalyticsActionProperties]="article">
+                (click)="onShare(article)" appAnalyticsAction="Article Shared" [appAnalyticsActionProperties]="article">
                 <mat-icon>share</mat-icon>
             </button>
         </mat-card-actions>
