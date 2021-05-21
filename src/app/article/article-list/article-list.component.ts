@@ -1,10 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { TitleService } from '@core/layout/title.service';
 import { ThemeService } from '@core/material/theme.service';
 import { WindowService } from '@core/window/window.service';
-import { Clipboard } from '@shared/cdk';
 import { Subscription } from 'rxjs';
 import { Article, ArticleOptions, ArticlePagination } from '../article';
 import { ArticleSort } from '../article.enum';
@@ -31,9 +29,8 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     redditStatus: { [key: string]: boolean } = {};
 
     constructor(private articleService: ArticleService, private themeService: ThemeService,
-                private route: ActivatedRoute, private snackBarService: MatSnackBar,
-                private titleService: TitleService, private window: WindowService,
-                private clipboard: Clipboard) {}
+                private route: ActivatedRoute, private titleService: TitleService,
+                private window: WindowService) {}
 
     ngOnInit(): void {
         this.subscriptions.add(this.themeService.isDark.subscribe(t => this.setConstructionImage(t)));
@@ -62,17 +59,7 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     onShare(article: Article) {
 
         // attempt to use the web share api, else fallback to clipboard
-        this.window.share(article.link, article.title).catch(() => {
-
-            const isCopied = this.clipboard.copy(article.link);
-
-            const action = isCopied ? null : 'Dismiss';
-            const message = isCopied ? 'Copied to clipboard.' : `${article.link}`;
-            const options = Object.assign({}, ArticleListConstent.SHARE_LINK_SNACKBAR_OPTIONS,
-                isCopied ? {} : { duration: null });
-
-            this.snackBarService.open(message, action, options);
-        });
+        this.window.share(article.link, article.title);
     }
 
     resolveRouteLink(dir: 'after' | 'before', article: Article): string {
