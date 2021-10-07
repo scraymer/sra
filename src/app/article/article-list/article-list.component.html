@@ -20,8 +20,9 @@
         <mat-card-content>
             <p class="app-card-content-title">{{ article.title }}</p>
             <pinch-zoom mat-card-image class="app-pinch-zoom-fill" *ngIf="article.image"
-                [wheel]="false" [auto-zoom-out]="true" [minPanScale]="1" [limitPan]="true"
-                backgroundColor="rgba(0,0,0,0)">
+                [autoZoomOut]="true" [disablePan]="true" [doubleTap]="false" [limitZoom]="10"
+                [minScale]="1"  [wheel]="false"
+                backgroundColor="rgba(0,0,0,0)" disableZoomControl="disable">
                 <img [src]="article.image" [alt]="article.title">
             </pinch-zoom>
         </mat-card-content>

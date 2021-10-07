@@ -20,5 +20,10 @@ pinch-zoom {
         min-width: 100%;
         min-height: 100%;
         align-items: stretch;
+
+        img {
+            min-width: 100%;
+            min-height: 100%;
+        }
     }
 }
