@@ -2,3 +2,23 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// overwrite default pinch-zoom library behaviour
+pinch-zoom {
+
+    // limit zoom control so that it is not visible all the time
+    .pz-zoom-button { opacity: 0 !important; }
+
+    // restore zoom control visiblity on container hover
+    &:hover .pz-zoom-button {
+        opacity: .5 !important;
+        &:hover { opacity: .7 !important; }
+    }
+
+    // fill parent container
+    &.app-pinch-zoom-fill .pinch-zoom-content {
+        min-width: 100%;
+        min-height: 100%;
+        align-items: stretch;
+    }
+}

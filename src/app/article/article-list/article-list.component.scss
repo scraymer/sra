@@ -51,9 +51,6 @@
             .mat-card-image {
                 flex: 1 1 auto;
                 overflow: hidden;
-                object-fit: cover;
-                object-position: top center;
-
                 margin-bottom: 0;
             }
         }
@@ -99,6 +96,9 @@
             .mat-card-image {
                 margin-bottom: -4px;
                 margin-top: 0;
+
+                object-fit: cover;
+                object-position: top center;
             }
         }
     }
@@ -178,7 +178,7 @@
 // layout style when header is full
 @media screen and (min-width: $breakpoint-nav-side-min) {
     .app-article-list-container .app-article-list-card {
-    
+
         .mat-card-content {
             max-height: 400px;
         }
