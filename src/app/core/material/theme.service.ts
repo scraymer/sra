@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, OnDestroy } from '@angular/core';
+import { Meta } from '@angular/platform-browser';
 import { WindowService } from '@core/window/window.service';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ThemeConstant } from './theme.constant';
 
 /**
@@ -11,7 +12,9 @@ import { ThemeConstant } from './theme.constant';
 @Injectable({
     providedIn: 'root'
 })
-export class ThemeService {
+export class ThemeService implements OnDestroy {
+
+    private subscriptions: Subscription = new Subscription();
 
     /**
      * Source subject for managing the dark theme flag state.
@@ -28,11 +31,24 @@ export class ThemeService {
      *
      * @param storage storage to persiste theme properties
      */
-    constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, private window: WindowService) {
+    constructor(
+        @Inject(LOCAL_STORAGE) private storage: StorageService, private window: WindowService,
+        private meta: Meta
+    ) {
 
         // define default isDark subject from user's default and set observable
         this.isDark$ = new BehaviorSubject<boolean>(this.isDarkDefault());
         this.isDark = this.isDark$.asObservable();
+
+        // subscribe to isDark change to apply meta tag updates
+        this.subscriptions.add(this.isDark$.subscribe((value) => this.updateMetaTags(value)));
+    }
+
+    /**
+     * On destroy event, unsubscribe all subscriptions.
+     */
+    ngOnDestroy(): void {
+        this.subscriptions.unsubscribe();
     }
 
     /**
@@ -51,5 +67,17 @@ export class ThemeService {
     private isDarkDefault(): boolean {
         const isDark: boolean = this.storage.get(ThemeConstant.IS_DARK_THEME_KEY);
         return isDark !== undefined ? isDark : this.window.isPreferDark();
+    }
+
+    /**
+     * Update 'theme-color' meta tag based on dark theme.
+     *
+     * @param isDark true for dark theme, else light theme
+     */
+    private updateMetaTags(isDark: boolean): void {
+        this.meta.updateTag({
+            name: "theme-color",
+            content: isDark ? ThemeConstant.THEME_COLOR_DARK : ThemeConstant.THEME_COLOR_LIGHT
+        })
     }
 }
