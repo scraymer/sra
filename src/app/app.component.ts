@@ -201,10 +201,16 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
      * @param isDark true to add dark theme
      */
     private setDarkTheme(isDark: boolean): void {
+
+        // apply dark theme setting
         if (isDark) {
             this.renderer.addClass(this.document.body, AppConstant.THEME.DARK_CLASS);
         } else {
             this.renderer.removeClass(this.document.body, AppConstant.THEME.DARK_CLASS);
         }
+
+        // add body class to indicate that body theming is ready to be applied
+        // must be done after initial theme setting or browser will flash
+        this.renderer.addClass(this.document.body, AppConstant.THEME.BODY_CLASS);
     }
 }

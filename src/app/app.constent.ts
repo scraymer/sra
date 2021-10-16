@@ -12,6 +12,7 @@ export class AppConstant {
      * Applicaiton theme class used on elements.
      */
     static readonly THEME = {
+        BODY_CLASS: 'app-body',
         DARK_CLASS: 'app-dark-theme'
     };
 }
