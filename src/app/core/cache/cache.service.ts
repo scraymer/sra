@@ -1,12 +1,28 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
+import { SwUpdate } from '@angular/service-worker';
+import { MatSnackBar } from '@shared/material';
+import { Subscription } from 'rxjs';
 import { CacheConstant } from './cache.constant';
 
 @Injectable({
     providedIn: 'root'
 })
-export class CacheService {
+export class CacheService implements OnDestroy {
 
-    constructor() { }
+    private subscriptions: Subscription = new Subscription();
+
+    constructor(private updateService: SwUpdate, private snackBarService: MatSnackBar) {
+
+        // subscribe to service work updates and trigger event if available
+        this.subscriptions.add(this.updateService.available.subscribe(() => this.onUpdateAvailable()));
+    }
+
+    /**
+     * On destroy event, unsubscribe all subscriptions.
+     */
+    ngOnDestroy(): void {
+        this.subscriptions.unsubscribe();
+    }
 
     /**
      * Use this method to clear all user-specific cache data,
@@ -51,5 +67,23 @@ export class CacheService {
 
         // return true to indicate that is was successfully run
         return true;
+    }
+
+    /**
+     * Ask user if they would like to update to the latest available version.
+     */
+     private onUpdateAvailable(): void {
+
+        // indicate update is available
+        console.warn('Application update available, refresh now!');
+
+        // display error messsage letting the user know the form was not submitted
+        const msg = 'A new version of the application is available.';
+        this.snackBarService.open(msg, 'Update', {
+            horizontalPosition: 'center',
+            verticalPosition: 'top'
+        }).onAction().subscribe(
+            () => this.updateService.activateUpdate().then(
+                () => document.location.reload()));
     }
 }

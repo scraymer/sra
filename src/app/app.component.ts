@@ -3,6 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Event, NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { CacheService } from '@core/cache/cache.service';
 import { CoreService } from '@core/core.service';
 import { NavService } from '@core/layout/nav.service';
 import { TitleService } from '@core/layout/title.service';
@@ -35,7 +36,9 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
     constructor(private navService: NavService, private themeService: ThemeService, private redditService: RedditService,
                 private breakpointObserver: BreakpointObserver, private renderer: Renderer2, private titleService: TitleService,
-                @Inject(DOCUMENT) private document: Document, private router: Router, private coreService: CoreService) {
+                @Inject(DOCUMENT) private document: Document, private router: Router, private coreService: CoreService,
+                private cacheService: CacheService
+    ) {
         this._breakpoints = {};
         this._prevRoutePath = '';
         this._subscriptions = new Subscription();
