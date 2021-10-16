@@ -4,7 +4,7 @@ on:
     branches:
       - master
 jobs:
-  
+
   build:
     runs-on: ubuntu-latest
     strategy:
@@ -42,10 +42,6 @@ jobs:
       - name: Install
         run: |
           npm ci
-
-      - name: Test
-        run: |
-          npm run test
 
       - name: Build
         run: |
