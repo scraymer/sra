@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { CacheService } from '@core/cache/cache.service';
 import { environment } from '@env';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import * as Snoowrap from 'snoowrap';
 import { RedditConstant } from './reddit.constant';
 
@@ -87,8 +87,9 @@ export class RedditService {
             isUserSpecific = false;
         }
 
-        return authReq.then(async (service) =>
-            await this.handleAuthResponse(service, isUserSpecific));
+        return authReq.then(
+            async (service) => await this.handleAuthResponse(service, isUserSpecific),
+            async (reason) => await this.handleAuthError(reason));
     }
 
     /**
@@ -130,11 +131,14 @@ export class RedditService {
      * Request a "user-less" authorization token.
      */
     private authFromApp(): Promise<Snoowrap> {
+        // apply "permanent: false" as a temporary workaround for snoowrap 'fromApplicationOnlyAuth'
+        // issues, see https://github.com/not-an-aardvark/snoowrap/issues/349
         return Snoowrap.fromApplicationOnlyAuth({
             clientId: environment.reddit.clientId,
             deviceId: environment.reddit.deviceId,
-            userAgent: environment.reddit.userAgent
-        });
+            userAgent: environment.reddit.userAgent,
+            permanent: false
+        } as any);
     }
 
     /**
@@ -193,5 +197,10 @@ export class RedditService {
 
         // return service to allow chaining
         return this.service;
+    }
+
+    private async handleAuthError(reason: { message: string }): Promise<any> {
+        console.error(`Failed to authenticate with Reddit API: ${reason?.message != null ? reason.message : 'unknown'}`);
+        return throwError('Could not initialize Reddit API authentication.');
     }
 }

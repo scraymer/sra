@@ -55,7 +55,7 @@ export class AnalyticsService {
 
         // configure mixpanel service initial configuration directly and set as globel value, required
         // as angulartics doesn't provided this functionality
-        globalThis.mixpanel.init(this.options.mixpanel.token);
+        globalThis.mixpanel.init(this.options.mixpanel.token, null, null);
 
         // only track identity by their randomly generated authentication state to respect privacy
         globalThis.mixpanel.identify(this.redditService.authState);
