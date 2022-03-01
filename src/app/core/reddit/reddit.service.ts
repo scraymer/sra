@@ -110,14 +110,16 @@ export class RedditService {
     /**
      * Return the reddit "user-specific" authentication url.
      */
-    public authUrl(): string {
+    public authUrl(compact: boolean = false): string {
 
-        return Snoowrap.getAuthUrl({
+        const url = Snoowrap.getAuthUrl({
             clientId: environment.reddit.clientId,
             redirectUri: environment.reddit.redirectUrl,
             scope: environment.reddit.scope,
             state: this.authState
         });
+
+        return compact ? url.replace('/api/v1/authorize', '/api/v1/authorize.compact') : url;
     }
 
     /**

@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit, OnDestroy {
      * page where they will be asked to login and allow access.
      */
     private initializeAuthentication(): void {
-        window.location.href = this.redditService.authUrl();
+        window.location.href = this.redditService.authUrl(true);
     }
 
     /**
