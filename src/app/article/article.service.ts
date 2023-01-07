@@ -114,7 +114,7 @@ export class ArticleService {
     }
 
     private resolveCommentsUrl(source: Snoowrap.Submission): string {
-        return environment.reddit.urlPrefix + source.id;
+        return environment.reddit.urlPrefix + source.permalink.replace(/^\//g, '');
     }
 
     private resolveUsername(source: Snoowrap.Submission): string {
