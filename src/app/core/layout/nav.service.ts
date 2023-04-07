@@ -168,7 +168,7 @@ export class NavService {
             type: 'link',
             icon: 'bookmark',
             route: source.display_name_prefixed,
-            avatar: source.icon_img
+            avatar: source.icon_img || source.community_icon
         };
     }
 }
