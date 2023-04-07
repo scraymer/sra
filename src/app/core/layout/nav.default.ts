@@ -6,6 +6,6 @@ export const DEFAULT_LOGOUT_ITEM: NavItemLink = { label: 'Logout', sortOrder: 99
 
 export const DEFAULT_NAV_ITEMS: Array<NavItemCategory|NavItemLink> = [
     { label: 'Front Page', sortOrder: 1, type: 'link', route: '/front-page', icon: 'home' },
-    { label: 'Subscriptions', sortOrder: 2, type: 'category', icon: 'bookmarks', subItems: [ /* POPULATED AT RUNTIME */ ] },
+    { label: 'Subscriptions', sortOrder: 2, type: 'category', icon: 'bookmarks', expanded: true, subItems: [ /* POPULATED AT RUNTIME */ ] },
     DEFAULT_LOGIN_ITEM
 ];

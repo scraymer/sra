@@ -6,7 +6,7 @@
             <img matListAvatar *ngIf="item.avatar" [src]="item.avatar">
             <a mat-line>{{ item.label }}</a>
         </mat-list-item>
-        <app-nav-category [label]="item.label" [icon]="item.icon" *ngIf="item.type === 'category' && item.subItems && item.subItems.length > 0"
+        <app-nav-category [label]="item.label" [icon]="item.icon" [expanded]="item.expanded" *ngIf="item.type === 'category' && item.subItems && item.subItems.length > 0"
                 class="app-nav-category" routerLinkActive="app-nav-item-active-primary">
             <ng-container *ngFor="let subItem of item.subItems; let subIndex = index">
                 <mat-list-item class="app-color-primary app-nav-category-item" *ngIf="subItem.type === 'link'" [routerLink]="subItem.route"

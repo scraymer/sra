@@ -6,6 +6,7 @@ export interface NavItem {
 }
 
 export interface NavItemCategory extends NavItem {
+    expanded: boolean;
     type: 'category';
     subItems: NavItemLink[];
 }
