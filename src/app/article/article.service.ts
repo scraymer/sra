@@ -123,15 +123,21 @@ export class ArticleService {
 
     private resolveAvatarUrl(source: Snoowrap.Submission): string {
 
-        const result: string = null;
+        const author = source ? source.author : null;
+        const subreddit = source ? source.subreddit : null;
 
-        // use author icon img if provided
-        if (source && source.author && source.author) {
-            // FIXME: this is not working...
-            // result = source.author.icon_img;
+        let result: string;
+        if (author && author.icon_img) {
+            result = author.icon_img;
+        } else if (subreddit && subreddit.icon_img) {
+            result = subreddit.icon_img;
+        } else if (subreddit && subreddit.community_icon) {
+            result = subreddit.community_icon;
+        } else {
+            result = 'assets/placeholder-avatar.png';
         }
 
-        return result ? result : 'assets/placeholder-avatar.png';
+        return result;
     }
 
     private resolveImageUrl(source: Snoowrap.Submission): string {
