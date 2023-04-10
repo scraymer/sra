@@ -108,7 +108,7 @@ export class ArticleService {
             username: this.resolveUsername(source),
             link: source.url,
             comments: this.resolveCommentsUrl(source),
-            avatar: this.resolveAvatarUrl(source),
+            avatar: 'assets/placeholder-avatar.png',
             image: this.resolveImageUrl(source)
         };
     }
@@ -119,25 +119,6 @@ export class ArticleService {
 
     private resolveUsername(source: Snoowrap.Submission): string {
         return 'u/' + source.author.name;
-    }
-
-    private resolveAvatarUrl(source: Snoowrap.Submission): string {
-
-        const author = source ? source.author : null;
-        const subreddit = source ? source.subreddit : null;
-
-        let result: string;
-        if (author && author.icon_img) {
-            result = author.icon_img;
-        } else if (subreddit && subreddit.icon_img) {
-            result = subreddit.icon_img;
-        } else if (subreddit && subreddit.community_icon) {
-            result = subreddit.community_icon;
-        } else {
-            result = 'assets/placeholder-avatar.png';
-        }
-
-        return result;
     }
 
     private resolveImageUrl(source: Snoowrap.Submission): string {

@@ -1,0 +1,80 @@
+{
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "clean",
+      "problemMatcher": [],
+      "label": "npm: clean",
+      "detail": "rimraf ./dist"
+    },
+    {
+      "type": "npm",
+      "script": "start",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "typescript",
+        "pattern": "$tsc",
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": {
+            "regexp": "^.*Generating browser application bundles.*"
+          },
+          "endsPattern": {
+            "regexp": "^.*Compiled successfully.*"
+          }
+        }
+      }
+    },
+    {
+      "type": "npm",
+      "script": "test",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "typescript",
+        "pattern": "$tsc",
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": {
+            "regexp": "(.*?)"
+          },
+          "endsPattern": {
+            "regexp": "bundle generation complete"
+          }
+        }
+      }
+    },
+    {
+      "type": "npm",
+      "script": "build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "label": "npm: build",
+      "detail": "ng build"
+    },
+    {
+      "type": "npm",
+      "script": "http-server",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "typescript",
+        "pattern": "$tsc",
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": {
+            "regexp": "^.*Starting up http-server.*"
+          },
+          "endsPattern": {
+            "regexp": "^.*Hit CTRL-C to stop the server.*"
+          }
+        }
+      },
+      "label": "npm: http-server",
+      "detail": "http-server -p 8080 -c-1 dist/app/browser"
+    }
+  ]
+}
